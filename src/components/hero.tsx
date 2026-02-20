@@ -1,7 +1,7 @@
 import fond from "../assets/panier.png"
 const Hero = () =>{
     return (
-        <body>
+        <section>
             <div className="relative flex mt-20 h-[91.6vh]">
                 <img src={fond} alt="fond" className=" ml-auto h-1/2 absolute top-1/5 left-1/2 bg-[#FBE9D5] rounded-3xl" />
                 <div className="absolute top-1/2 left-1/3 -translate-x-1/2 -translate-y-1/2">
@@ -16,9 +16,8 @@ const Hero = () =>{
                 </div>
             </div>
 
-        </body>
+        </section>
        
     )
 }
 export default Hero
-//
