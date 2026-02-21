@@ -20,6 +20,9 @@ Plateforme de don et récupération d'invendus alimentaires à Madagascar.
 # Cloner
 git clone https://github.com/ItokianaRAKT/anti-gaspillage.git
 
+# Change direction to the cloned project
+cd anti-gaspillage
+
 # Installer
 npm install
 
