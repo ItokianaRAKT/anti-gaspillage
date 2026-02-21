@@ -1,2 +1,9 @@
 @import "tailwindcss";
-@tailwind utilities;
+@config "../tailwind.config.js";
+h1, h2, h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+body {
+    font-family: 'DM Sans', sans-serif;
+}
