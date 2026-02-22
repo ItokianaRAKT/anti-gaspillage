@@ -2,18 +2,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faUser,  } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingBasket, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from '../assets/logo/logo-dark-transparent.png';
+import { Link } from "react-router-dom";
 function Navbar() {
   return (
     <nav className="w-full fixed top-0 z-10">
       <div className="bg-white text-[#2E6F40] p-4 flex justify-between w-full  items-center h-[8vh] shadow-md">
-            <img src={logo} alt="Logo" className="h-16 "/>
+            <Link to="/"><img src={logo} alt="Logo" className="h-16 "/></Link>
             <div className="space-x-36 flex text-[#2E6F40] text-3xl font-medium">         
-                <button className=" font-titre">Accueil</button>
-                <button className=" font-titre">Trouver un repas</button>
-                <button className=" font-titre">Partager</button>
+                <Link to="/" className="font-titre">Accueil</Link>
+                <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
+                <Link to="/Partager" className="font-titre">Partager</Link>
             </div> 
             <div className="flex gap-15 text-[#2E6F40] h-[7vh] justify-end items-center pr-[3vw]">
-              <FontAwesomeIcon icon={faUser} className="text-[4vh]" />
+                <Link to="/Profil"><FontAwesomeIcon icon={faUser} className="text-[4vh]" /></Link>
             </div>
       </div>
 
@@ -24,7 +25,7 @@ function Navbar() {
                     <option>Toutes les catégories</option>
                     <option>Pains et patisseries</option>
                     <option>Fruits et légumes</option>
-                    <option>Plats faits maisons</option>
+                    <option>Plats faits maison</option>
                     <option>Invendus de commerce</option>
                 </select>
             
@@ -38,10 +39,12 @@ function Navbar() {
                 <FontAwesomeIcon icon={faMagnifyingGlass} className=" "/>
             </div>
 
-            <div className="flex bg-green-50 w-[15%] text-[#2E6F40]">
-              <FontAwesomeIcon icon={faShoppingBasket} className="text-[3vh] mx-[1vw]" />
+              <Link to="/Panier" className="flex bg-green-50 w-[15%] text-[#2E6F40]">
+            <div className="flex">
+              <FontAwesomeIcon icon={faShoppingBasket} className="text-[4vh]" />
               <p className=" font-titre">Panier</p>
             </div>   
+              </Link>
       </div>
     </nav>
   )
