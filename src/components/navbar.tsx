@@ -50,4 +50,3 @@ function Navbar() {
   )
 }
 export default Navbar
-//#FBE9D5]

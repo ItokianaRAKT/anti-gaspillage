@@ -1,4 +1,4 @@
-import Navbar from "../components/Navbar"
+import Navbar from "../components/navbar"
 import Hero from "../components/hero"
 import Etapes from "../components/etapes"
 import Pourquoi from "../components/pourquoi"
