@@ -1,38 +1,26 @@
-import caddie from "../assets/caddie.png"
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { faTwitter, faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons"
 import logo from "../assets/logo/logo-dark-transparent.png"
+import { Link } from "react-router-dom";
 const Footer = () => {
     return (
-        <section className="mt-[70vh] w-full flex flex-col relative ">
-            
-                <img src={caddie} alt="caddie" className="absolute pt-[3%]  -ml-[n5%]"/>
-                <img src={logo} alt="logo Tsinjo" className="absolute pl-[15%]"/>
-
-                    <div className="flex w-full justify-end  gap-[5%] pr-[6%] text-2xl pt-[5vh]">
-                        <div className="flex flex-col leading-[200%]">
-                            <p className="font-titre font-bold pb-[10%]">Pages</p>
-                            <a href="#">Accueil</a>
-                            <a href="#">Trouver un repas</a>
-                            <a href="#">Partager</a>
-                            <a href="#">Panier</a>
-                        </div>
-                        
-                        <div className="flex flex-col leading-[200%]">
-                            <p className="font-titre font-bold pb-[10%]">Produits</p>
-                            <a href="#">Pains et patisseries</a>
-                            <a href="#">Fruits et légumes</a>
-                            <a href="#">Plats fais maison</a>
-                            <a href="#">Invenus de commerce</a>
-                        </div>
-
-                        <div className="flex flex-col leading-[200%]">
-                            <p className="font-titre font-bold pb-[10%]">Contacts</p>
-                            <p>contact@tsinjo.dev</p>
-                            <p>+261 34 00 000 00</p>
-                            <p>Antananarivo, Madagascar</p>
-                        </div>
-                    </div>
-
-                    <p className="text-center text-2xl pt-[5%]" >© 2026 Tsinjo</p>
+        <section className="mt-[70vh] w-full flex flex-col bg-green-50 items-center">
+            <div className="flex items-center justify-between w-[90%] text-2xl pb-[1%] border-b">
+                <div className="flex gap-[1vw]">
+                    <FontAwesomeIcon icon={faTwitter} className="text-[3vh]" />
+                    <FontAwesomeIcon icon={faFacebook} className="text-[3vh]" />
+                    <FontAwesomeIcon icon={faInstagram} className="text-[3vh]" />
+                </div>
+                <img src={logo} alt="logo Tsinjo" className="w-[15vw]"/>
+                <p>tsinjo@contact.dev</p>
+            </div>
+            <div className="flex justify-center gap-[7vw] text-2xl font-semibold pt-[2%]">
+                <Link to="/" className="font-titre">Accueil</Link>
+                <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
+                <Link to="/Partager" className="font-titre">Partager</Link>
+                <Link to="/Panier" className="font-titre">Panier</Link>
+            </div>
+                <p className="text-center text-xl pt-[3%]" >Copyright © 2026.Tsinjo. All rights reserved</p>
         </section>
     )
 }

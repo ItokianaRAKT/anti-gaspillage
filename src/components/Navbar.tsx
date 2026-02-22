@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faUser,  } from "@fortawesome/free-regular-svg-icons";
+import { faUser } from "@fortawesome/free-regular-svg-icons";
 import { faShoppingBasket, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import logo from '../assets/logo/logo-dark-transparent.png';
 import { Link } from "react-router-dom";
@@ -36,7 +36,7 @@ function Navbar() {
                     placeholder="Rechercher un produit..."
                     className="outline-none w-full font-titre"
                   />
-                <FontAwesomeIcon icon={faMagnifyingGlass} className=" "/>
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
             </div>
 
               <Link to="/Panier" className="flex bg-green-50 w-[15%] text-[#2E6F40]">
