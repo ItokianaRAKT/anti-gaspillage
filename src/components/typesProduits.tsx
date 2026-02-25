@@ -4,7 +4,7 @@ import imgTypes from "../assets/lol.jpg"
 const TypesProduits = () => {
     return (
         <section className="mt-[25%] flex flex-col relative ">
-            <p className="text-center mb-20 text-[#2E6F40] text-5xl font-titre">Types de produits disponibles</p>
+            <p className="text-center mb-20 text-primaryGreen text-5xl font-titre">Types de produits disponibles</p>
             <div className="flex justify-center items-center gap-[10%] text-[#1f2721]">
                 <img src={imgTypes} alt="" className="w-[35%]"/>
                 <div className="text-4xl leading-30 ">

@@ -3,6 +3,7 @@ import Liste from "../components/listeProduits"
 function Trouver () {
     return (
         <>
+            
             <Liste />
         </>
     )
