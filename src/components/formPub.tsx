@@ -37,22 +37,22 @@ const units = [
     form.expiryDate;
 
   return (
-    <div className="max-w-xl mt-[10%] mx-auto p-6 bg-white rounded-2xl shadow-lg ">
-      <h2 className="text-2xl font-semibold mb-6">Publier un produit</h2>
+    <div className="max-w-xl mt-[10%] mx-auto p-6 bg-white rounded-2xl shadow-lg">
+      <h2 className="text-2xl font-semibold mb-6 outline-none">Publier un produit</h2>
 
       <div className="flex flex-col gap-4">
 
-        {/* Nom */}
+        
         <input
           type="text"
           name="name"
           placeholder="Nom du produit"
           value={form.name}
           onChange={handleChange}
-          className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
+          className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black outline-none"
         />
 
-        {/* Type */}
+        
         <select
           name="type"
           value={form.type}
@@ -63,17 +63,15 @@ const units = [
           <option>Pain & pâtisserie</option>
           <option>Fruits & légumes</option>
           <option>Plats faits maison</option>
-          <option>Produits laitiers</option>
-          <option>Épicerie</option>
-          <option>Autre</option>
+          <option>Invendus de commerce</option>
         </select>
 
-        {/* Prix + unité */}
+        
         <div className="flex gap-2">
           <input
             type="number"
             name="price"
-            placeholder="Prix unitaire"
+            placeholder="Prix unitaire en Ariary"
             value={form.price}
             onChange={handleChange}
             className="border rounded-lg p-3 w-2/3 focus:outline-none focus:ring-2 focus:ring-black"
@@ -91,7 +89,7 @@ const units = [
           </select>
         </div>
 
-        {/* Stock */}
+        
         <input
           type="number"
           name="stock"
@@ -101,7 +99,7 @@ const units = [
           className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        {/* Date limite */}
+        
         <input
           type="date"
           name="expiryDate"
@@ -110,7 +108,7 @@ const units = [
           className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        {/* Adresse */}
+        
         <input
           type="text"
           name="address"
@@ -119,7 +117,7 @@ const units = [
           className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        {/* Heure limite */}
+        
         <input
           type="time"
           name="pickupTime"
@@ -128,7 +126,7 @@ const units = [
           className="border rounded-lg p-3 focus:outline-none focus:ring-2 focus:ring-black"
         />
 
-        {/* Bouton */}
+        
         <button
           disabled={!isValid}
           className={`mt-4 p-3 rounded-xl font-medium transition 

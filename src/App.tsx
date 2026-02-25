@@ -5,6 +5,7 @@ import Trouver from "./pages/Trouver";
 import Partager from "./pages/Partager"
 import Profil from "./pages/Profil"
 import Panier from "./pages/Panier"
+import Footer from "./components/footer"
 function App() {
   return (
     <BrowserRouter>
@@ -16,6 +17,7 @@ function App() {
         <Route path="/Profil" element={<Profil />} />
         <Route path="/Panier" element={<Panier />} />
       </Routes>
+      <Footer />
     </BrowserRouter>
   );
 }

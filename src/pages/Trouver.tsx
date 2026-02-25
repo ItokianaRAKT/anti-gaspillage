@@ -1,10 +1,9 @@
-import Navbar from "../components/navbar"
-import Footer from "../components/footer"
+
+import Liste from "../components/listeProduits"
 function Trouver () {
     return (
         <>
-            <Navbar />
-            <Footer />
+            <Liste />
         </>
     )
 }
