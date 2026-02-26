@@ -10,17 +10,17 @@ const categories = [
 const Filtre = () => {
     const [selected, setSelected] = useState("Toutes les catégories");
     return (
-        <div>
+        <div className="flex justify-center mb-[3%]">
             {categories.map((cat) => (
                 <button
                 key={cat}
                 onClick={() => setSelected(cat)}
                 className={`
-            px-4 py-2 rounded-[10px] transition-all duration-300 
+            px-4 py-2 text-2xl rounded-[10px] transition-all duration-300 
             ${
               selected === cat
-                ? "bg-green-100 text-black shadow-lg "
-                : " hover:bg-green-100 hover:scale-105"
+                ? " text-primaryGreen text-2xl scale-105"
+                : "hover:scale-105"
             }
           `}>
             {cat}

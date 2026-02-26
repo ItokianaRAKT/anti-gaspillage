@@ -20,7 +20,7 @@ const ListeProduits = () => {
 
       <section className="mt-[10%]">
         <p className="text-center mb-12 text-primaryGreen text-5xl font-titre">Nos produits</p>
-        <Filtre />
+        <Filtre/>
 
         <div className=" mx-[1vh] flex flex-wrap gap-[5%]">
 
