@@ -6,4 +6,25 @@ h1, h2, h3 {
 
 body {
     font-family: 'DM Sans', sans-serif;
+    
+}
+
+html, body, #root {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+* {
+  box-sizing: border-box;
+}
+
+html {
+  overflow-x: hidden;
+}
+
+body {
+  overflow-x: clip; /* clip au lieu de hidden — ne crée PAS de contexte de scroll, donc ne casse pas le fixed navbar */
+  width: 100%;
 }
