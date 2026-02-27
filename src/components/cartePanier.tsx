@@ -22,55 +22,47 @@ export default function CartItem({
   const total = price * quantity;
 
   return (
-    <div className="w-full  bg-white rounded-2xl shadow-md p-4 flex items-center gap-6">
-      
-      {/* Image */}
+    <div className="w-full bg-white rounded-2xl shadow-md p-4 flex items-center gap-3 md:gap-6">
+
       <img
         src={image}
         alt={name}
-        className="w-45 aspect-square object-cover rounded-xl"
+        className="w-20 md:w-36 aspect-square object-cover rounded-xl shrink-0"
       />
 
-      {/* Infos */}
-      <div className="flex flex-col grow">
-        <h3 className="text-lg font-semibold">{name}</h3>
+      <div className="flex flex-col grow min-w-0">
+        <h3 className="text-base md:text-lg font-semibold truncate">{name}</h3>
 
-        {/* Compteur */}
-        <div className="flex items-center gap-4 mt-2">
+        <div className="flex items-center gap-3 mt-2">
           <button
             onClick={onDecrease}
-            className="px-3 py-1 bg-gray-200 rounded-lg"
+            className="px-3 py-1 bg-gray-200 rounded-lg text-lg"
           >
             -
           </button>
-
-          <span className="text-lg font-medium">{quantity}</span>
-
+          <span className="text-base md:text-lg font-medium">{quantity}</span>
           <button
-  onClick={onIncrease}
-  disabled={quantity >= maxStock}
-  className="px-3 py-1 bg-gray-200 rounded-lg disabled:opacity-40"
->
-  +
-</button>
+            onClick={onIncrease}
+            disabled={quantity >= maxStock}
+            className="px-3 py-1 bg-gray-200 rounded-lg text-lg disabled:opacity-40"
+          >
+            +
+          </button>
         </div>
-        
       </div>
 
-<button
-    onClick={onRemove}
-    className="text-gray-400 hover:text-red-500 text-xl"
-  >
-    ✕
-  </button>
-
-
-      {/* Prix total produit */}
-      <div className="text-lg font-bold">
+      {/* Prix total */}
+      <div className="text-base md:text-lg font-bold shrink-0">
         {total} Ar
       </div>
 
-      
+      {/* Supprimer */}
+      <button
+        onClick={onRemove}
+        className="text-gray-400 hover:text-red-500 text-xl shrink-0"
+      >
+        ✕
+      </button>
     </div>
   );
 }

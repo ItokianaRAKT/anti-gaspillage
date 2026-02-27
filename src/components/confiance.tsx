@@ -6,7 +6,7 @@ const Confiance = () => {
             <img
                 src={fondConfiance}
                 alt=""
-                className="w-full h-[55vh] md:h-[65vh] lg:h-[70vh] object-cover border border-gray-600 shadow-gray-900 shadow-2xl"
+                className="w-full h-[55vh] md:h-[65vh] lg:h-[70vh] object-cover border border-gray-600 shadow-gray-300 shadow-xl"
             />
 
             <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-16 lg:px-24">
