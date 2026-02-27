@@ -28,3 +28,4 @@ body {
   overflow-x: clip; /* clip au lieu de hidden — ne crée PAS de contexte de scroll, donc ne casse pas le fixed navbar */
   width: 100%;
 }
+

@@ -12,29 +12,24 @@ const Navbar = () => {
   return (
     <nav className="w-full fixed top-0 z-10 left-0 right-0">
 
-      {/* ─── TOP BAR ─────────────────────────────────────────────── */}
       <div className="bg-white text-primaryGreen px-4 flex justify-between w-full items-center h-[8vh] shadow-md">
 
-        {/* Logo — contraint à la hauteur de la barre */}
         <Link to="/" className=" h-full flex items-center">
           <img src={logo} alt="Logo" className="h-[6vh] w-auto" />
         </Link>
 
-        {/* Desktop nav links */}
         <div className="hidden lg:flex space-x-36 text-primaryGreen text-3xl font-medium">
           <Link to="/" className="font-titre">Accueil</Link>
           <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
           <Link to="/Partager" className="font-titre">Partager</Link>
         </div>
 
-        {/* Desktop profil icon */}
         <div className="hidden lg:flex gap-15 text-primaryGreen h-[7vh] justify-end items-center pr-[3vw]">
           <Link to="/Profil">
             <FontAwesomeIcon icon={faUser} className="text-[4vh]" />
           </Link>
         </div>
 
-        {/* Mobile/tablet icons + hamburger */}
         <div className="flex lg:hidden items-center gap-5 ">
           <Link to="/Panier">
             <FontAwesomeIcon icon={faShoppingBasket} className="text-2xl text-primaryGreen" />
@@ -52,7 +47,6 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ─── SEARCH BAR (desktop lg+) ────────────────────────────── */}
       <div className="hidden lg:flex bg-primaryGreen justify-around items-center h-[7vh] text-2xl">
         <select className="outline-none text-white bg-[#1c4b29] font-titre h-[5vh] pl-[4vh] rounded-[10px]">
           <option>Toutes les catégories</option>
@@ -79,9 +73,7 @@ const Navbar = () => {
         </Link>
       </div>
 
-      {/* ─── SEARCH BAR (tablet md → lg) ─────────────────────────── */}
       <div className="hidden md:flex lg:hidden bg-primaryGreen justify-between items-center h-[7vh] text-xl px-4 gap-2">
-        {/* Catégories dropdown */}
         <div className="relative ">
           <button
             onClick={() => setCategoryOpen(!categoryOpen)}
@@ -105,7 +97,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Barre de recherche */}
         <div className="flex items-center border-2 h-[4vh] flex-1 bg-white text-primaryGreen justify-between px-4 rounded-[10px]">
           <input
             type="search"
@@ -116,10 +107,8 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* ─── MENU MOBILE (dropdown) ───────────────────────────────── */}
       {menuOpen && (
         <div className="lg:hidden bg-white shadow-lg border-t border-gray-100 w-full">
-          {/* Recherche mobile */}
           <div className="bg-primaryGreen px-4 py-3 flex flex-col gap-3">
             <div className="flex items-center border-2 h-[5vh] bg-white text-primaryGreen justify-between px-4 rounded-[10px]">
               <input
@@ -138,7 +127,6 @@ const Navbar = () => {
             </select>
           </div>
 
-          {/* Liens nav */}
           <div className="flex flex-col text-primaryGreen text-2xl font-medium divide-y divide-gray-100">
             <Link to="/" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
               Accueil
