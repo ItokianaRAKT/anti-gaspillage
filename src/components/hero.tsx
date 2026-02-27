@@ -5,7 +5,6 @@ const Hero = () => {
   return (
     <section className="w-full overflow-hidden">
 
-      {/* ─── DESKTOP (lg+) ─── identique à l'original ──────────────── */}
       <div className="hidden lg:flex relative mt-20 h-[91.6vh] bg-green-50">
         <img
           src={fond}
@@ -32,10 +31,8 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* ─── TABLET + MOBILE (< lg) ─── image en haut, texte en bas ── */}
       <div className="flex lg:hidden flex-col bg-green-50 mt-[8vh] min-h-[91.6vh] w-full">
 
-        {/* Image en haut */}
         <div className="w-full flex justify-center pt-10 px-6 box-border">
           <img
             src={fond}
@@ -44,7 +41,6 @@ const Hero = () => {
           />
         </div>
 
-        {/* Texte + boutons */}
         <div className="w-full px-6 md:px-12 pt-8 pb-10 flex flex-col items-center text-center box-border">
           <p className="text-primaryGreen text-4xl md:text-5xl font-semibold font-titre leading-tight mb-5">
             Moins de gaspillage, <br /> Plus de partage
