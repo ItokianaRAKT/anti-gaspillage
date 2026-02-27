@@ -6,11 +6,12 @@ import Filtre from "../components/filtreProduits"
 
 const produits = [
     {nom: "Pain", stock: 5, adresse: "Ivandry", prix: 0, image: Pain},
-    {nom:"Pomme", stock: 2, adresse:"Analakely", prix: 10, image: Pomme},
-    {nom:"Pomme", stock: 2, adresse:"Analakely", prix: 10, image: Pomme},
-    {nom:"Pomme", stock: 2, adresse:"Analakely", prix: 10, image: Pomme},
-    {nom:"Pomme", stock: 2, adresse:"Analakely", prix: 10, image: Pomme},
-    {nom:"Pomme", stock: 2, adresse:"Analakely", prix: 10, image: Pomme}
+    {nom:"Pomme", stock: 5, adresse:"Analakely", prix: 10, image: Pomme},
+    {nom:"Pomme", stock: 5, adresse:"Analakely", prix: 10, image: Pomme},
+    {nom:"Pomme", stock: 5, adresse:"Analakely", prix: 10, image: Pomme},
+    {nom:"Pomme", stock: 5, adresse:"Analakely", prix: 10, image: Pomme},
+    {nom:"Pomme", stock: 5, adresse:"Analakely", prix: 10, image: Pomme},
+
 
 
 ]

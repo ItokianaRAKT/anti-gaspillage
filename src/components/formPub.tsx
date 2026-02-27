@@ -1,5 +1,4 @@
 import { useState } from "react";
-
 const units = [
   "pièce",
   "pack",
@@ -44,8 +43,9 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     form.expiryDate;
 
   return (
+    <section className="w-full">
+
     <div className="max-w-6xl mt-50 mx-auto p-6 rounded-2xl shadow-lg">
-  
   <p className="text-primaryGreen text-5xl font-titre mb-13 text-center">
     Publier un produit
   </p>
@@ -61,7 +61,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         value={form.name}
         onChange={handleChange}
         className="border rounded-lg p-3"
-      />
+        />
 
       <select
         name="type"
@@ -84,14 +84,14 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
           value={form.price}
           onChange={handleChange}
           className="border rounded-lg p-3 w-2/3"
-        />
+          />
 
         <select
           name="unit"
           value={form.unit}
           onChange={handleChange}
           className="border rounded-lg p-3 w-1/3"
-        >
+          >
           {units.map((unit) => (
             <option key={unit}>{unit}</option>
           ))}
@@ -105,7 +105,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         value={form.stock}
         onChange={handleChange}
         className="border rounded-lg p-3"
-      />
+        />
 
       <input
         type="date"
@@ -113,7 +113,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         value={form.expiryDate}
         onChange={handleChange}
         className="border rounded-lg p-3"
-      />
+        />
 
       <input
         type="text"
@@ -121,7 +121,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         value={form.address}
         onChange={handleChange}
         className="border rounded-lg p-3"
-      />
+        />
 
       <input
         type="time"
@@ -129,7 +129,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         value={form.pickupTime}
         onChange={handleChange}
         className="border rounded-lg p-3"
-      />
+        />
     </div>
 
     <div className="flex-1 flex flex-col items-center gap-5">
@@ -137,9 +137,9 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       <div className="w-[40vh] aspect-square border-2 border-dashed rounded-xl flex items-center justify-center overflow-hidden bg-white">
         {form.image ? (
           <img
-            src={URL.createObjectURL(form.image)}
-            alt="aperçu"
-            className="w-full h-full object-cover"
+          src={URL.createObjectURL(form.image)}
+          alt="aperçu"
+          className="w-full h-full object-cover"
           />
         ) : (
           <span className="text-gray-400 text-sm">
@@ -172,11 +172,13 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         ${isValid 
           ? "bg-black text-white hover:opacity-90" 
           : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
-    >
+          >
       Publier maintenant
     </button>
   </div>
 
-</div>)
+</div> 
+      </section>
+)
 }
 export default PublishProductForm
