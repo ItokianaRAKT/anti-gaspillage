@@ -10,6 +10,13 @@ const units = [
   "portion",
 ];
 
+const type = [
+  "Pain & pâtisserie", 
+  "Fruits & légumes", 
+  "Plats faits maison", 
+  "Invendus de commerce"
+]
+
 function PublishProductForm() {
   const defaultAddress = "Ivandry, Antananarivo";
   const defaultPickupTime = "18:00";
@@ -17,9 +24,9 @@ function PublishProductForm() {
   const [form, setForm] = useState({
     name: "",
     type: "",
-    price: "",
+    price: 0,
     unit: "pièce",
-    stock: "",
+    stock: 0,
     expiryDate: "",
     address: defaultAddress,
     pickupTime: defaultPickupTime,
@@ -37,11 +44,11 @@ function PublishProductForm() {
   };
 
   const isValid =
-    form.name &&
-    form.type &&
-    form.price &&
-    form.stock &&
-    form.expiryDate;
+      form.name.trim() !== "" &&
+      form.type.trim() !== "" &&
+      Number(form.price) > 0 &&
+      Number(form.stock) > 0 &&
+      form.expiryDate !== "";
 
   return (
     <section className="w-full px-4 md:px-8">
@@ -64,16 +71,16 @@ function PublishProductForm() {
             />
 
             <select
+              
               name="type"
               value={form.type}
               onChange={handleChange}
               className="border rounded-lg p-3 text-base md:text-lg"
             >
-              <option value="">Type de produit</option>
-              <option>Pain & pâtisserie</option>
-              <option>Fruits & légumes</option>
-              <option>Plats faits maison</option>
-              <option>Invendus de commerce</option>
+              <option value="">Choisir une catégorie</option>
+              {type.map((type) => (
+                  <option key={type}>{type}</option>
+                ))}
             </select>
 
             <div className="flex gap-2">
@@ -83,6 +90,8 @@ function PublishProductForm() {
                 placeholder="Prix en Ariary"
                 value={form.price}
                 onChange={handleChange}
+                min={0}
+                step={100}
                 className="border rounded-lg p-3 w-2/3 text-base md:text-lg"
               />
               <select
@@ -103,6 +112,7 @@ function PublishProductForm() {
               placeholder={`Stock disponible (${form.unit}${form.unit === "pièce" ? "s" : ""})`}
               value={form.stock}
               onChange={handleChange}
+              min={1}
               className="border rounded-lg p-3 text-base md:text-lg"
             />
 

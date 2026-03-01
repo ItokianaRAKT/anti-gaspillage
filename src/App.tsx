@@ -8,7 +8,7 @@ import Panier from "./pages/Panier"
 import Footer from "./components/footer"
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/anti-gaspillage">
       <Navbar />
       <Routes>
         <Route path="/" element={<Accueil />} />
