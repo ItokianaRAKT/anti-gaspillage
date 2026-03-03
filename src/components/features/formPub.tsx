@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { z } from "zod";
 
 const units = [
   "pièce",
@@ -11,15 +12,28 @@ const units = [
 ];
 
 const type = [
-  "Pain & pâtisserie", 
-  "Fruits & légumes", 
-  "Plats faits maison", 
+  "Pain & pâtisserie",
+  "Fruits & légumes",
+  "Plats faits maison",
   "Invendus de commerce"
 ]
+
+const productSchema = z.object({
+  name: z.string().min(1, "Veuillez entrer le nom du produit."),
+  type: z.enum(type, "Type invalide"),
+  price: z.number().positive("Prix invalide"),
+  unit: z.enum(units),
+  stock: z.number().positive("Stock invalide"),
+  expiryDate: z.string().min(1, "Veuillez entrer la DLC"),
+  address: z.string().min(1, "Veuillez entrer une adresse"),
+  pickupTime: z.string().min(1, "Veuillez entrer une heure de retrait"),
+})
 
 function PublishProductForm() {
   const defaultAddress = "Ivandry, Antananarivo";
   const defaultPickupTime = "18:00";
+
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   const [form, setForm] = useState({
     name: "",
@@ -43,12 +57,38 @@ function PublishProductForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const isValid =
-      form.name.trim() !== "" &&
-      form.type.trim() !== "" &&
-      Number(form.price) > 0 &&
-      Number(form.stock) > 0 &&
-      form.expiryDate !== "";
+  const handleSubmit = () => {
+    const result = productSchema.safeParse({
+      ...form,
+      price: Number(form.price),
+      stock: Number(form.stock),
+    });
+
+    if (!result.success) {
+      const fieldErrors: Record<string, string> = {};
+      result.error.issues.forEach((err) => {
+        const field = err.path[0] as string;
+        fieldErrors[field] = err.message;
+      });
+      setErrors(fieldErrors);
+      return;
+    }
+
+    setErrors({});
+    setForm({
+      name: "",
+      type: "",
+      price: 0,
+      unit: "pièce",
+      stock: 0,
+      expiryDate: "",
+      address: defaultAddress,
+      pickupTime: defaultPickupTime,
+      image: null,
+    });
+    console.log("Formulaire valide :", result.data);
+  };
+
 
   return (
     <section className="w-full px-4 md:px-8">
@@ -61,84 +101,115 @@ function PublishProductForm() {
         <div className="flex flex-col md:flex-row gap-10 md:gap-20">
 
           <div className="flex-1 flex flex-col gap-4">
-            <input
-              type="text"
-              name="name"
-              placeholder="Nom du produit"
-              value={form.name}
-              onChange={handleChange}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Nom du produit</label>
 
-            <select
-              
-              name="type"
-              value={form.type}
-              onChange={handleChange}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            >
-              <option value="">Choisir une catégorie</option>
-              {type.map((type) => (
-                  <option key={type}>{type}</option>
-                ))}
-            </select>
-
-            <div className="flex gap-2">
               <input
-                type="number"
-                name="price"
-                placeholder="Prix en Ariary"
-                value={form.price}
+                type="text"
+                name="name"
+                placeholder="Nom du produit"
+                value={form.name}
                 onChange={handleChange}
-                min={0}
-                step={100}
-                className="border rounded-lg p-3 w-2/3 text-base md:text-lg"
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
               />
-              <select
-                name="unit"
-                value={form.unit}
-                onChange={handleChange}
-                className="border rounded-lg p-3 w-1/3 text-base md:text-lg"
-              >
-                {units.map((unit) => (
-                  <option key={unit}>{unit}</option>
-                ))}
-              </select>
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name}</p>}
             </div>
 
-            <input
-              type="number"
-              name="stock"
-              placeholder={`Stock disponible (${form.unit}${form.unit === "pièce" ? "s" : ""})`}
-              value={form.stock}
-              onChange={handleChange}
-              min={1}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Catégorie</label>
 
-            <input
-              type="date"
-              name="expiryDate"
-              value={form.expiryDate}
-              onChange={handleChange}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            />
+              <select
+                name="type"
+                value={form.type}
+                onChange={handleChange}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              >
+                <option value="">Choisir une catégorie</option>
+                {type.map((t) => (
+                  <option key={t}>{t}</option>
+                ))}
+              </select>
+              {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type}</p>}
+            </div>
 
-            <input
-              type="text"
-              name="address"
-              value={form.address}
-              onChange={handleChange}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            />
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Prix unitaire</label>
 
-            <input
-              type="time"
-              name="pickupTime"
-              value={form.pickupTime}
-              onChange={handleChange}
-              className="border rounded-lg p-3 text-base md:text-lg"
-            />
+              <div className="flex gap-2">
+                <input
+                  type="number"
+                  name="price"
+                  placeholder="Prix en Ariary"
+                  value={form.price}
+                  onChange={handleChange}
+                  min={0}
+                  step={100}
+                  className="border rounded-lg p-3 w-2/3 text-base md:text-lg"
+                />
+                <select
+                  name="unit"
+                  value={form.unit}
+                  onChange={handleChange}
+                  className="border rounded-lg p-3 w-1/3 text-base md:text-lg"
+                >
+                  {units.map((unit) => (
+                    <option key={unit}>{unit}</option>
+                  ))}
+                </select>
+              </div>
+              {errors.price && <p className="text-red-500 text-sm mt-1">{errors.price}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Stock disponible</label>
+
+              <input
+                type="number"
+                name="stock"
+                placeholder={`Stock disponible (${form.unit}${form.unit === "pièce" ? "s" : ""})`}
+                value={form.stock}
+                onChange={handleChange}
+                min={1}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              />
+              {errors.stock && <p className="text-red-500 text-sm mt-1">{errors.stock}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Date Limite de Consommation</label>
+              <input
+                type="date"
+                name="expiryDate"
+                value={form.expiryDate}
+                onChange={handleChange}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              />
+              {errors.expiryDate && <p className="text-red-500 text-sm mt-1">{errors.expiryDate}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Adresse de récupération</label>
+              <input
+                type="text"
+                name="address"
+                value={form.address}
+                onChange={handleChange}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              />
+              {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
+            </div>
+
+            <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Heure limite de récupération</label>
+              <input
+                type="time"
+                name="pickupTime"
+                value={form.pickupTime}
+                onChange={handleChange}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              />
+              {errors.pickupTime && <p className="text-red-500 text-sm mt-1">{errors.pickupTime}</p>}
+            </div>
           </div>
 
           <div className="flex-1 flex flex-col items-center gap-5">
@@ -173,11 +244,8 @@ function PublishProductForm() {
 
         <div className="flex justify-center mt-8">
           <button
-            disabled={!isValid}
-            className={`px-8 py-3 rounded-xl font-medium transition text-lg
-              ${isValid
-                ? "bg-black text-white hover:opacity-90"
-                : "bg-gray-300 text-gray-500 cursor-not-allowed"}`}
+            onClick={handleSubmit}
+            className="px-8 py-3 rounded-xl font-medium transition text-lg bg-black text-white hover:opacity-90"
           >
             Publier maintenant
           </button>
