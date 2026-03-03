@@ -1,5 +1,5 @@
 
-import Liste from "../components/listeProduits"
+import Liste from "../features/listeProduits"
 function Trouver () {
     return (
         <>

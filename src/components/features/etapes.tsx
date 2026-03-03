@@ -4,7 +4,7 @@ import { faBullhorn, faCartArrowDown, faCheck } from "@fortawesome/free-solid-sv
 const Etapes = () => {
     return (
         <section className="py-12 px-4">
-            <p className="text-center mb-12 text-primaryGreen text-5xl font-titre">Comment ca marche</p>
+            <p className="text-center mb-12 text-primaryGreen text-5xl font-titre">Comment ça marche</p>
 
             <div className="hidden sm:flex justify-around text-center font-contenu flex-wrap gap-8 px-4">
                 <div className="bg-[#6CAE75] text-white text-shadow-lg rounded-full flex flex-col justify-center items-center h-96 w-60">

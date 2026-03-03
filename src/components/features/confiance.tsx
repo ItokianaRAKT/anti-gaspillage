@@ -1,4 +1,4 @@
-import fondConfiance from "../assets/fondConfiance.jpg"
+import fondConfiance from "../../assets/fondConfiance.jpg"
 
 const Confiance = () => {
     return (

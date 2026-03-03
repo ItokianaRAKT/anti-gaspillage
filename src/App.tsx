@@ -1,11 +1,11 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Navbar from "./components/navbar";
-import Accueil from "./pages/Accueil";
-import Trouver from "./pages/Trouver";
-import Partager from "./pages/Partager"
-import Profil from "./pages/Profil"
-import Panier from "./pages/Panier"
-import Footer from "./components/footer"
+import Navbar from "./components/features/navbar";
+import Accueil from "./components/ui/Accueil";
+import Trouver from "./components/ui/Trouver";
+import Partager from "./components/ui/Partager"
+import Profil from "./components/ui/Profil"
+import Panier from "./components/ui/Panier"
+import Footer from "./components/features/footer"
 function App() {
   return (
     <BrowserRouter basename="/anti-gaspillage">

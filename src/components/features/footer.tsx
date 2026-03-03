@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faTwitter, faFacebook, faInstagram } from "@fortawesome/free-brands-svg-icons"
-import logo from "../assets/logo/logo-dark-transparent.png"
+import logo from "../../assets/logo/logo-dark-transparent.png"
 import { Link } from "react-router-dom";
 
 const Footer = () => {

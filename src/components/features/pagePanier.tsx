@@ -1,7 +1,7 @@
 import { useState } from "react";
 import CartePanier from "./cartePanier";
-import pizza from "../assets/pizza.jpg"
-import painChoco from "../assets/painChoco.jpg"
+import pizza from "../../assets/pizza.jpg"
+import painChoco from "../../assets/painChoco.jpg"
 
 export default function CartPage() {
   const [items, setItems] = useState([

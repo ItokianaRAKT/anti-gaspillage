@@ -1,4 +1,4 @@
-import Form from "../components/formPub"
+import Form from "../features/formPub"
 function Partager () {
     return (
         <>

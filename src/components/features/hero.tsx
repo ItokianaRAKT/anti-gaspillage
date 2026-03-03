@@ -1,4 +1,4 @@
-import fond from "../assets/panier.png";
+import fond from "../../assets/panier.png";
 import { Link } from "react-router-dom";
 
 const Hero = () => {
@@ -21,12 +21,10 @@ const Hero = () => {
             vous ce qui mérite d'être savouré.
           </p>
           <div className="mt-30 -ml-30 flex">
-            <button className="bg-primaryGreen -translate-x-[3vw] text-white text-3xl p-6 rounded-4xl font-contenu">
-              Trouver un repas
-            </button>
-            <button className="bg-[#FBE9D5] text-primaryGreen text-3xl p-6 rounded-4xl font-contenu">
-              Partager
-            </button>
+            <Link to="Trouver" className="bg-primaryGreen -translate-x-[3vw] text-white text-3xl p-6 rounded-4xl font-contenu"> Trouver un repas </Link>
+            
+            <Link to="Partager" className="bg-[#FBE9D5] text-primaryGreen text-3xl p-6 rounded-4xl font-contenu"> Partager </Link>
+            
           </div>
         </div>
       </div>

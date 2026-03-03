@@ -1,4 +1,4 @@
-import Page from "../components/pagePanier"
+import Page from "../features/pagePanier"
 function Panier () {
     return (
         <>

@@ -1,4 +1,4 @@
-import fondGasp from "../assets/gaspillage.jpg"
+import fondGasp from "../../assets/gaspillage.jpg"
 
 const Pourquoi = () => {
     return (

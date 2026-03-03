@@ -1,8 +1,8 @@
 import CarteProduit from "./carteProduit";
-import Pain from "../assets/painListe.jpg"
-import Defaut from "../assets/légumes.jpg"
-import Pomme from "../assets/pomme.jpg"
-import Filtre from "../components/filtreProduits"
+import Pain from "../../assets/painListe.jpg"
+import Defaut from "../../assets/légumes.jpg"
+import Pomme from "../../assets/pomme.jpg"
+import Filtre from "./filtreProduits"
 
 const produits = [
     {nom: "Pain", stock: 5, adresse: "Ivandry", prix: 0, image: Pain},
