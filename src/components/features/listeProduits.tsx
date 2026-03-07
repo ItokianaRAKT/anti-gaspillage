@@ -1,37 +1,38 @@
+import { useEffect } from "react";
 import CarteProduit from "./carteProduit";
-import Pain from "../../assets/painListe.jpg"
-import Defaut from "../../assets/légumes.jpg"
-import Pomme from "../../assets/pomme.jpg"
-import Filtre from "./filtreProduits"
-
-const produits = [
-    {nom: "Pain", stock: 5, adresse: "Ivandry", prix: 0, image: Pain},
-    {nom: "Pomme", stock: 5, adresse: "Analakely", prix: 10, image: Pomme},
-    {nom: "Pomme", stock: 5, adresse: "Analakely", prix: 10, image: Pomme},
-    {nom: "Pomme", stock: 5, adresse: "Analakely", prix: 10, image: Pomme},
-    {nom: "Pomme", stock: 5, adresse: "Analakely", prix: 10, image: Pomme},
-    {nom: "Pomme", stock: 5, adresse: "Analakely", prix: 10, image: Pomme},
-]
+import Defaut from "../../assets/légumes.jpg";
+import Filtre from "./filtreProduits";
+import { useProductStore } from "../../store/productStore";
 
 const ListeProduits = () => {
+    const { produits, loading, erreur, fetchProduits } = useProductStore();
+
+    useEffect(() => {
+        fetchProduits();
+    }, []);
+
     return (
         <section className="mt-20 px-4 md:px-8">
             <p className="text-center mb-10 text-primaryGreen text-4xl md:text-5xl font-titre">Nos produits</p>
             <Filtre />
 
+            {loading && <p className="text-center">Chargement...</p>}
+            {erreur && <p className="text-center text-red-500">{erreur}</p>}
+
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-                {produits.map((p, i) => (
+                {produits.map((p) => (
                     <CarteProduit
-                        key={i}
-                        nom={p.nom}
-                        stock={p.stock}
-                        adresse={p.adresse}
-                        prix={p.prix}
-                        image={p.image || Defaut}
+                        key={p.id_product}
+                        nom={p.name_product}
+                        stock={p.current_stock}
+                        adresse={p.recovery_address}
+                        prix={p.price_product}
+                        image={Defaut}
                     />
                 ))}
             </div>
         </section>
-    )
-}
-export default ListeProduits
+    );
+};
+
+export default ListeProduits;
