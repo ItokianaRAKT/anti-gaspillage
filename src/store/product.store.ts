@@ -6,7 +6,7 @@ interface ProductStore {
     produits: Product[];
     loading: boolean;
     erreur: string | null;
-    fetchProduits: () => Promise<void>;
+    fetchProduits: (categoryId?: string) => Promise<void>;
 }
 
 const useProductStore = create<ProductStore>((set) => ({
@@ -14,10 +14,10 @@ const useProductStore = create<ProductStore>((set) => ({
     loading: false,
     erreur: null,
 
-    fetchProduits: async () => {
+    fetchProduits: async (categoryId?: string) => {
         set({ loading: true, erreur: null });
         try {
-            const data = await getProduits();
+            const data = await getProduits(categoryId);
             set({ produits: data, loading: false });
         } catch (e) {
             set({ erreur: "Erreur lors du chargement", loading: false });
@@ -25,4 +25,4 @@ const useProductStore = create<ProductStore>((set) => ({
     },
 }))
 
-export {useProductStore}
+export { useProductStore }

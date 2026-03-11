@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getCategories } from "../../services/category.service";
+import { useProductStore } from "../../store/product.store";
 
 interface Category {
     id_category: string;
@@ -7,18 +8,24 @@ interface Category {
 }
 
 const Filtre = () => {
-    const [selected, setSelected] = useState("Toutes les catégories");
+    const [selected, setSelected] = useState<string | null >(null);
     const [categories, setCategories] = useState<Category[]>([]);
+    const fetchProduits = useProductStore((state) => state.fetchProduits);
 
     useEffect(() => {
         getCategories().then(data => setCategories(data));
     }, []);
 
+    const handleSelect = (categoryId: string | null ) => {
+        setSelected(categoryId);
+        fetchProduits(categoryId ?? undefined)
+    }
+
     return (
         <div className="flex overflow-x-auto mb-6 px-4 gap-2 scrollbar-hide
                         md:flex-wrap md:justify-center md:overflow-visible md:mb-8 md:gap-0">
             <button
-                onClick={() => setSelected("Toutes les catégories")}
+                onClick={() => handleSelect(null)}
                 className={`
                     whitespace-nowrap shrink-0
                     px-4 py-2 text-lg md:text-2xl rounded-[10px] transition-all duration-300
@@ -34,7 +41,7 @@ const Filtre = () => {
             {categories.map((cat) => (
                 <button
                     key={cat.id_category}
-                    onClick={() => setSelected(cat.id_category)}
+                    onClick={() => handleSelect(cat.id_category)}
                     className={`
                         whitespace-nowrap shrink-0
                         px-4 py-2 text-lg md:text-2xl rounded-[10px] transition-all duration-300

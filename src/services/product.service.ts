@@ -3,8 +3,9 @@ import { ProductSchema} from "../schemas/product.schema";
 import type { Product } from "../schemas/product.schema";
 import { z } from "zod";
 
-const getProduits = async (): Promise<Product[]> => {
-    const response = await api.get("/products/");
+const getProduits = async (categoryId?: string): Promise<Product[]> => {
+    const params = categoryId ? { category: categoryId } : {};
+    const response = await api.get("/products/", { params });
     const parsed = z.array(ProductSchema).safeParse(response.data);
 
     if (!parsed.success){
