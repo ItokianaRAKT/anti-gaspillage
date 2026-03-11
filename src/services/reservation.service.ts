@@ -1,0 +1,21 @@
+import api from "../api/axios";
+
+interface ReservationPayload {
+    quantity_reserved: number;
+    estimated_recovery_time: string;
+    product: string
+}
+
+const createReservation = async (playload: ReservationPayload) => {
+    const response = await api.post("/reservations/", playload);
+    return response.data;
+};
+
+const annulerReservation = async (id_reservation: string) => {
+    const response = await api.patch(`/reservations/${id_reservation}/non-recovered/`);
+    return response.data;
+};
+
+export { createReservation }
+export { annulerReservation 
+}

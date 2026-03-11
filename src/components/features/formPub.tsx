@@ -1,7 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect} from "react";
 import { z } from "zod";
+import { publierProduit } from "../../services/product.service";
+import  { getCategories } from "../../services/category.service"
 
-const units = [
+interface Category {
+  id_category: string;
+  name_category: string;
+}
+
+  const units = [
   "pièce",
   "pack",
   "kg",
@@ -9,18 +16,12 @@ const units = [
   "barquette",
   "lot",
   "portion",
-];
-
-const type = [
-  "Pain & pâtisserie",
-  "Fruits & légumes",
-  "Plats faits maison",
-  "Invendus de commerce"
-]
+] as const;
 
 const productSchema = z.object({
   name: z.string().min(1, "Veuillez entrer le nom du produit."),
-  type: z.enum(type, "Type invalide"),
+  description: z.string(),
+  type: z.string().min(1, "Type invalide"),
   price: z.number().positive("Prix invalide"),
   unit: z.enum(units),
   stock: z.number().positive("Stock invalide"),
@@ -34,9 +35,10 @@ function PublishProductForm() {
   const defaultPickupTime = "18:00";
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-
+  
   const [form, setForm] = useState({
     name: "",
+    description: "",
     type: "",
     price: 0,
     unit: "pièce",
@@ -46,6 +48,13 @@ function PublishProductForm() {
     pickupTime: defaultPickupTime,
     image: null as File | null,
   });
+  
+  
+  const [categories, setCategories] = useState<Category[]>([]);
+  useEffect(() => {
+    getCategories().then(data => setCategories(data));
+  }, []);
+  
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -57,7 +66,7 @@ function PublishProductForm() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async() => {
     const result = productSchema.safeParse({
       ...form,
       price: Number(form.price),
@@ -75,8 +84,24 @@ function PublishProductForm() {
     }
 
     setErrors({});
+    try {
+      const formData =new FormData();
+          formData.append("name_product", result.data.name);
+      formData.append("price_product", String(result.data.price));
+      formData.append("description_product","")
+      formData.append("initial_stock", String(result.data.stock));
+      formData.append("current_stock", String(result.data.stock));
+      formData.append("expiration_date", result.data.expiryDate);
+      formData.append("recovery_address", result.data.address);
+      formData.append("recovery_time_limit", `${result.data.expiryDate}T${result.data.pickupTime}:00Z`);
+      formData.append("category", result.data.type); // a vérifier, je sais pas
+      if (form.image) formData.append("image_product", form.image);
+      await publierProduit(formData);
+    alert("Produit publié !");
+
     setForm({
       name: "",
+      description:"",
       type: "",
       price: 0,
       unit: "pièce",
@@ -85,8 +110,12 @@ function PublishProductForm() {
       address: defaultAddress,
       pickupTime: defaultPickupTime,
       image: null,
-    });
-    console.log("Formulaire valide :", result.data);
+      }
+      
+    )} catch (e) {
+      alert ("Erreur lors de la publication");
+    }
+
   };
 
 
@@ -116,6 +145,18 @@ function PublishProductForm() {
             </div>
 
             <div>
+              <label className="block text-sm font-medium text-gray-600 mb-1">Description</label>
+              <input
+                type="text"
+                name="description"
+                placeholder="Décrivez votre produit"
+                value={form.description}
+                onChange={handleChange}
+                className="border rounded-lg p-3 text-base md:text-lg w-full"
+              />
+            </div>
+
+            <div>
               <label className="block text-sm font-medium text-gray-600 mb-1">Catégorie</label>
 
               <select
@@ -125,8 +166,10 @@ function PublishProductForm() {
                 className="border rounded-lg p-3 text-base md:text-lg w-full"
               >
                 <option value="">Choisir une catégorie</option>
-                {type.map((t) => (
-                  <option key={t}>{t}</option>
+                {categories.map((cat) => (
+                  <option key={cat.id_category} value={cat.id_category}>
+                    {cat.name_category}
+                  </option>
                 ))}
               </select>
               {errors.type && <p className="text-red-500 text-sm mt-1">{errors.type}</p>}
@@ -152,8 +195,8 @@ function PublishProductForm() {
                   onChange={handleChange}
                   className="border rounded-lg p-3 w-1/3 text-base md:text-lg"
                 >
-                  {units.map((unit) => (
-                    <option key={unit}>{unit}</option>
+                  {units.map((unit)=> (
+                    <option key={unit} value={unit}>{unit}</option>
                   ))}
                 </select>
               </div>

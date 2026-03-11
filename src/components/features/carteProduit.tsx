@@ -1,23 +1,46 @@
 import { useState } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faCartPlus, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons" 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartPlus, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons";
+import { createReservation } from "../../services/reservation.service";
+import { useCartStore } from "../../store/cart.store";
 
 interface ComposantsCartes {
-    nom: string,
-    stock: number,
-    adresse: string,
-    prix: number,
-    image: string
+    id_product: string; 
+    nom: string;
+    stock: number;
+    adresse: string;
+    prix: number;
+    image: string;
 }
 
-const CarteProduit = ({nom, stock, adresse, prix, image}: ComposantsCartes) => {
+const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: ComposantsCartes) => {
     const [quantity, setQuantity] = useState<number>(1);
     const [isOpen, setIsOpen] = useState(false);
+    const [loading, setLoading] = useState(false);
+    const ajouterArticle = useCartStore((state) => state.ajouterArticle);
+
+    const handleReserver = async () => {
+        setLoading(true);
+        try {
+            const data = await createReservation({
+                quantity_reserved: quantity,
+                estimated_recovery_time: new Date().toISOString(), // à affiner plus tard, je sais pas comment
+                product: id_product,
+            });
+
+            ajouterArticle({ id_product, id_reservation: data.id_reservation, nom, prix, quantite: quantity, adresse, image });
+            setIsOpen(false);
+        } catch (e) {
+            alert("Erreur lors de la réservation");
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <section className="mb-[3%]">
             <div className="w-full text-xl border border-gray-200 rounded-2xl p-3 shadow-sm">
-                <img src={image} alt="Image" className="w-full rounded-2xl m-auto aspect-square object-cover"/>
+                <img src={image} alt="Image" className="w-full rounded-2xl m-auto aspect-square object-cover" />
                 <p className="font-semibold mt-2 truncate">{nom}</p>
                 <p className="text-gray-500 text-base">Dispo: {stock}</p>
                 <p className="text-gray-500 text-base truncate">{adresse}</p>
@@ -42,12 +65,15 @@ const CarteProduit = ({nom, stock, adresse, prix, image}: ComposantsCartes) => {
                         <p className="text-sm text-gray-500 mb-4">Stock disponible : {stock}</p>
                         <div className="flex justify-between">
                             <button onClick={() => setIsOpen(false)} className="text-red-400 text-2xl"><FontAwesomeIcon icon={faXmark} /></button>
-                            <button onClick={() => setIsOpen(false)} className="text-primaryGreen text-2xl"><FontAwesomeIcon icon={faCheck} /></button>
+                            <button onClick={handleReserver} disabled={loading} className="text-primaryGreen text-2xl disabled:opacity-50">
+                                <FontAwesomeIcon icon={faCheck} />
+                            </button>
                         </div>
                     </div>
                 </div>
             )}
         </section>
-    )
-}
-export default CarteProduit
+    );
+};
+
+export default CarteProduit;

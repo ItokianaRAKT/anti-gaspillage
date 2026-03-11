@@ -13,4 +13,11 @@ const getProduits = async (): Promise<Product[]> => {
     }
     return parsed.data;
 }
-export { getProduits };
+
+const publierProduit = async (FormData: FormData) =>{
+    const response = await api.post("/products/create/", FormData, { 
+        headers: {"Content-type": "multipart/form-data"}
+    });
+    return response.data
+};
+export { getProduits, publierProduit };

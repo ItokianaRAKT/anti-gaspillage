@@ -10,6 +10,7 @@ const ProductSchema = z.object({
     recovery_time_limit: z.string(),
     is_available: z.boolean(),
     category: z.string().nullable(),
+    image_product:z.string().nullable().optional(),
 })
 type Product = z.infer<typeof ProductSchema>;
 export {ProductSchema};
