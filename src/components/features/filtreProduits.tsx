@@ -16,10 +16,10 @@ const Filtre = () => {
         getCategories().then(data => setCategories(data));
     }, []);
 
-    const handleSelect = (categoryId: string | null ) => {
-        setSelected(categoryId);
-        fetchProduits(categoryId ?? undefined)
-    }
+    const handleSelect = (categoryId: string | null) => {
+    setSelected(categoryId);
+    fetchProduits(categoryId ?? undefined, undefined);
+};
 
     return (
         <div className="flex overflow-x-auto mb-6 px-4 gap-2 scrollbar-hide

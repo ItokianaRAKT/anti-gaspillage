@@ -5,11 +5,11 @@ import Filtre from "./filtreProduits";
 import { useProductStore } from "../../store/product.store";
 
 const ListeProduits = () => {
-    const { produits, loading, erreur, fetchProduits } = useProductStore();
+    const { produits, loading, erreur, fetchProduits, searchActif } = useProductStore();
 
     useEffect(() => {
-        fetchProduits();
-    }, []);
+        fetchProduits(undefined, searchActif);
+}, []);
 
     return (
         <section className="mt-20 px-4 md:px-8">
