@@ -1,4 +1,11 @@
 import fondConfiance from "../../assets/fondConfiance.jpg"
+import { motion } from "framer-motion"
+
+const blocs = [
+    { titre: "Proche de vous, en temps réel.", desc: "Affichage des offres disponibles autour de votre zone." },
+    { titre: "Réservez sans risque.",           desc: "Confirmation immédiate et système de protection intégré." },
+    { titre: "La communauté vérifie.",          desc: "Notes et avis pour garantir la qualité." },
+]
 
 const Confiance = () => {
     return (
@@ -10,41 +17,52 @@ const Confiance = () => {
             />
 
             <div className="absolute inset-0 flex flex-col justify-center items-center px-6 md:px-16 lg:px-24">
-                <p className="w-full text-center text-primaryGreen text-3xl md:text-5xl mb-8 md:mb-12 font-titre">
+
+                <motion.p
+                    className="w-full text-center text-primaryGreen text-3xl md:text-5xl mb-8 md:mb-12 font-titre"
+                    initial={{ opacity: 0, y: -40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, amount: 0.5 }}
+                    transition={{ duration: 0.55, ease: "easeOut" }}
+                >
                     Faites nous confiance
-                </p>
+                </motion.p>
 
                 <div className="hidden sm:flex justify-between gap-6 leading-relaxed text-xl md:text-2xl font-contenu w-full max-w-5xl">
-                    <div className="w-[30%] flex flex-col text-justify">
-                        <p className="mb-4 text-2xl md:text-3xl text-center">Proche de vous, en temps réel.</p>
-                        <p>Affichage des offres disponibles autour de votre zone.</p>
-                    </div>
-                    <div className="w-[30%] flex flex-col text-justify">
-                        <p className="mb-4 text-2xl md:text-3xl text-center">Réservez sans risque.</p>
-                        <p>Confirmation immédiate et système de protection intégré.</p>
-                    </div>
-                    <div className="w-[30%] flex flex-col text-justify">
-                        <p className="mb-4 text-2xl md:text-3xl text-center">La communauté vérifie.</p>
-                        <p>Notes et avis pour garantir la qualité.</p>
-                    </div>
+                    {blocs.map((bloc, i) => (
+                        <motion.div
+                            key={bloc.titre}
+                            className="w-[30%] flex flex-col text-justify"
+                            initial={{ opacity: 0, y: 50 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, amount: 0.4 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.15 }}
+                        >
+                            <p className="mb-4 text-2xl md:text-3xl text-center">{bloc.titre}</p>
+                            <p>{bloc.desc}</p>
+                        </motion.div>
+                    ))}
                 </div>
 
                 <div className="flex sm:hidden flex-col gap-6 text-lg font-contenu w-full max-w-sm">
-                    <div className="flex flex-col text-center bg-white/80 rounded-2xl p-4">
-                        <p className="mb-2 text-xl font-semibold text-primaryGreen">Proche de vous, en temps réel.</p>
-                        <p>Affichage des offres disponibles autour de votre zone.</p>
-                    </div>
-                    <div className="flex flex-col text-center bg-white/80 rounded-2xl p-4">
-                        <p className="mb-2 text-xl font-semibold text-primaryGreen">Réservez sans risque.</p>
-                        <p>Confirmation immédiate et système de protection intégré.</p>
-                    </div>
-                    <div className="flex flex-col text-center bg-white/80 rounded-2xl p-4">
-                        <p className="mb-2 text-xl font-semibold text-primaryGreen">La communauté vérifie.</p>
-                        <p>Notes et avis pour garantir la qualité.</p>
-                    </div>
+                    {blocs.map((bloc, i) => (
+                        <motion.div
+                            key={bloc.titre}
+                            className="flex flex-col text-center bg-white/80 rounded-2xl p-4"
+                            initial={{ opacity: 0, y: 40 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.12 }}
+                        >
+                            <p className="mb-2 text-xl font-semibold text-primaryGreen">{bloc.titre}</p>
+                            <p>{bloc.desc}</p>
+                        </motion.div>
+                    ))}
                 </div>
+
             </div>
         </section>
     )
 }
+
 export default Confiance

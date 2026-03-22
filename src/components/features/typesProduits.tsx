@@ -1,6 +1,14 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBreadSlice, faStore, faShop, faCarrot } from "@fortawesome/free-solid-svg-icons"
 import imgTypes from "../../assets/lol.jpg"
+import { motion } from "framer-motion"
+
+const items = [
+    { icon: faBreadSlice, label: "Pains et patisseries" },
+    { icon: faShop,       label: "Plats faits maison"  },
+    { icon: faCarrot,     label: "Fruits et légumes"   },
+    { icon: faStore,      label: "Invendus de commerce"},
+]
 
 const TypesProduits = () => {
     return (
@@ -10,49 +18,66 @@ const TypesProduits = () => {
             </p>
 
             <div className="hidden sm:flex justify-center items-center gap-[10%] text-[#1f2721]">
-                <img src={imgTypes} alt="" className="w-[35%] rounded-2xl object-cover" />
+
+                <motion.img
+                    src={imgTypes}
+                    alt=""
+                    className="w-[35%] rounded-2xl object-cover"
+                    initial={{ opacity: 0, x: -80 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true, amount: 0.3 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                />
+
                 <div className="text-4xl leading-14">
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faBreadSlice} />
-                        <p>Pains et patisseries</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faShop} />
-                        <p>Plats faits maison</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faCarrot} />
-                        <p>Fruits et légumes</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faStore} />
-                        <p>Invendus de commerce</p>
-                    </div>
+                    {items.map((item, i) => (
+                        <motion.div
+                            key={item.label}
+                            className="flex items-center gap-4"
+                            initial={{ opacity: 0, x: 80 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true, amount: 0.3 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: i * 0.12 }}
+                        >
+                            <FontAwesomeIcon icon={item.icon} />
+                            <p>{item.label}</p>
+                        </motion.div>
+                    ))}
                 </div>
+
             </div>
 
             <div className="flex sm:hidden flex-col items-center gap-8 text-[#1f2721]">
-                <img src={imgTypes} alt="" className="w-full max-w-sm rounded-2xl object-cover" />
+
+                <motion.img
+                    src={imgTypes}
+                    alt=""
+                    className="w-full max-w-sm rounded-2xl object-cover"
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                />
+
                 <div className="text-2xl flex flex-col gap-4 w-full max-w-sm">
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faBreadSlice} className="w-6 shrink-0" />
-                        <p>Pains et patisseries</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faShop} className="w-6 shrink-0" />
-                        <p>Plats faits maison</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faCarrot} className="w-6 shrink-0" />
-                        <p>Fruits et légumes</p>
-                    </div>
-                    <div className="flex items-center gap-4">
-                        <FontAwesomeIcon icon={faStore} className="w-6 shrink-0" />
-                        <p>Invendus de commerce</p>
-                    </div>
+                    {items.map((item, i) => (
+                        <motion.div
+                            key={item.label}
+                            className="flex items-center gap-4"
+                            initial={{ opacity: 0, x: 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, ease: "easeOut", delay: i * 0.1 }}
+                        >
+                            <FontAwesomeIcon icon={item.icon} className="w-6 shrink-0" />
+                            <p>{item.label}</p>
+                        </motion.div>
+                    ))}
                 </div>
+
             </div>
         </section>
     )
 }
+
 export default TypesProduits

@@ -5,14 +5,14 @@ import TypesProduits from "../features/typesProduits"
 import Confiance from "../features/confiance"
 function Accueil() {
   return (
-    <>
+    <div className="relative">
       <Hero />
       <Etapes />
       <Pourquoi />
       <TypesProduits />
       <Confiance />
       
-    </>
+    </div>
   )
 }
 
