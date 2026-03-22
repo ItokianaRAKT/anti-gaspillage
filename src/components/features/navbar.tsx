@@ -28,7 +28,7 @@ const Navbar = () => {
           <img src={logo} alt="Logo" className="h-[6vh] w-auto" />
         </Link>
 
-        <div className="hidden lg:flex space-x-36 text-primaryGreen text-3xl font-medium">
+        <div className="hidden lg:flex space-x-36 text-primaryGreen text-2xl font-medium">
           <Link to="/" className="font-titre">Accueil</Link>
           <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
           <Link to="/Partager" className="font-titre">Partager</Link>

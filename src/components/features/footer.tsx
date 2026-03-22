@@ -9,9 +9,15 @@ const Footer = () => {
 
             <div className="flex items-center justify-between w-[90%] pb-4 border-b gap-4">
                 <div className="flex gap-3">
-                    <FontAwesomeIcon icon={faTwitter} className="text-[3vh]" />
-                    <FontAwesomeIcon icon={faFacebook} className="text-[3vh]" />
-                    <FontAwesomeIcon icon={faInstagram} className="text-[3vh]" />
+                    <a href="https://share.google/DbPHv9nPmsku9LqtS">
+                        <FontAwesomeIcon icon={faTwitter} className="text-[3vh]" />
+                    </a>                    
+                    <a href="https://share.google/30c5UGeTYpJe9bzGP">
+                        <FontAwesomeIcon icon={faFacebook} className="text-[3vh]" />
+                    </a>
+                    <a href="https://share.google/GVAVrn0iW66Y9Qdpx">
+                        <FontAwesomeIcon icon={faInstagram} className="text-[3vh]" />
+                    </a>
                 </div>
 
                 <img src={logo} alt="logo Tsinjo" className="w-[30vw] md:w-[20vw] lg:w-[15vw]" />
