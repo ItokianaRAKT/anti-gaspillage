@@ -1,10 +1,11 @@
 import CartePanier from "./cartePanier";
 import { useCartStore } from "../../store/cart.store";
 import { annulerReservation } from "../../services/reservation.service";
+import { useProductStore } from "../../store/product.store";
 
 export default function CartPage() {
   const { articles, supprimerArticle } = useCartStore();
-
+  const fetchProduits = useProductStore((state) => state.fetchProduits);
   const totalPanier = articles.reduce(
     (acc, article) => acc + article.prix * article.quantite,
     0
@@ -31,6 +32,7 @@ export default function CartPage() {
                 onSupprimer={async () => {
                   await annulerReservation(article.id_reservation);
                   supprimerArticle(article.id_product);
+                  fetchProduits();
                 }}
               />
             ))}

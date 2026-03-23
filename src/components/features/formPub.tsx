@@ -22,7 +22,7 @@ const productSchema = z.object({
   name: z.string().min(1, "Veuillez entrer le nom du produit."),
   description: z.string(),
   type: z.string().min(1, "Type invalide"),
-  price: z.number().positive("Prix invalide"),
+  price: z.number().min(0, "Prix invalide"),
   unit: z.enum(units),
   stock: z.number().positive("Stock invalide"),
   expiryDate: z.string().min(1, "Veuillez entrer la DLC"),

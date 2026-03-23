@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus, faXmark, faCheck } from "@fortawesome/free-solid-svg-icons";
 import { createReservation } from "../../services/reservation.service";
 import { useCartStore } from "../../store/cart.store";
-
+import { useProductStore } from "../../store/product.store";
 interface ComposantsCartes {
     id_product: string; 
     nom: string;
@@ -18,7 +18,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
     const [isOpen, setIsOpen] = useState(false);
     const [loading, setLoading] = useState(false);
     const ajouterArticle = useCartStore((state) => state.ajouterArticle);
-
+    const fetchProduits = useProductStore((state) => state.fetchProduits);
     const handleReserver = async () => {
         setLoading(true);
         try {
@@ -29,6 +29,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
             });
 
             ajouterArticle({ id_product, id_reservation: data.id_reservation, nom, prix, quantite: quantity, adresse, image });
+            fetchProduits();
             setIsOpen(false);
         } catch (e) {
             alert("Erreur lors de la réservation");
@@ -45,7 +46,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
                 <p className="text-gray-500 text-base">Dispo: {stock}</p>
                 <p className="text-gray-500 text-base truncate">{adresse}</p>
                 <div className="flex justify-between items-center mt-1">
-                    <p className="font-medium">{prix} Ar</p>
+                    <p className="font-medium">{prix === 0 ? "Gratuit" : `${prix} Ar`}</p>
                     <button onClick={() => setIsOpen(true)} className="text-primaryGreen text-2xl hover:scale-110 transition-transform">
                         <FontAwesomeIcon icon={faCartPlus} />
                     </button>

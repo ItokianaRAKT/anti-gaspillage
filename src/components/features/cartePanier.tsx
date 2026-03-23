@@ -24,7 +24,7 @@ export default function CartItem({ nom, image, prix, quantite, onSupprimer }: Ca
       </div>
 
       <div className="text-base md:text-lg font-bold shrink-0">
-        {total} Ar
+        {prix === 0 ? "Gratuit" : `${total} Ar`}
       </div>
 
       <button onClick={() => setIsOpen(true)} className="text-gray-400 hover:text-red-500 text-xl shrink-0">
