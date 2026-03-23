@@ -12,7 +12,7 @@ const createReservation = async (playload: ReservationPayload) => {
 };
 
 const annulerReservation = async (id_reservation: string) => {
-    const response = await api.patch(`/reservations/${id_reservation}/non-recovered/`);
+    const response = await api.post(`/reservations/${id_reservation}/not-collected/`);
     return response.data;
 };
 

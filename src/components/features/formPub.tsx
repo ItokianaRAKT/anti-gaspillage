@@ -95,6 +95,7 @@ function PublishProductForm() {
       formData.append("recovery_address", result.data.address);
       formData.append("recovery_time_limit", `${result.data.expiryDate}T${result.data.pickupTime}:00Z`);
       formData.append("category", result.data.type); // a vérifier, je sais pas
+      formData.append("is_available", "true");
       if (form.image) formData.append("image_product", form.image);
       await publierProduit(formData);
     alert("Produit publié !");

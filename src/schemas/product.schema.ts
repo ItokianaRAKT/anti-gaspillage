@@ -1,9 +1,10 @@
 import { z } from "zod";
+
 const ProductSchema = z.object({
     id_product : z.string(),
     name_product: z.string(),
     description_product: z.string(),
-    price_product: z.number(),
+    price_product: z.coerce.number(),
     current_stock: z.number(),
     expiration_date: z.string(),
     recovery_address: z.string(),
