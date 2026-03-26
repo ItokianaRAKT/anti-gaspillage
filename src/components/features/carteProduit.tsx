@@ -24,7 +24,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
         try {
             const data = await createReservation({
                 quantity_reserved: quantity,
-                estimated_recovery_time: new Date().toISOString(), // à affiner plus tard, je sais pas comment
+                estimated_recovery_time: new Date().toISOString(),
                 product: id_product,
             });
 
@@ -32,7 +32,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
             fetchProduits();
             setIsOpen(false);
         } catch (e) {
-            alert("Erreur lors de la réservation");
+            alert("Erreur lors de la réservation"); 
         } finally {
             setLoading(false);
         }

@@ -5,18 +5,26 @@ import { faShoppingBasket, faMagnifyingGlass, faBars, faXmark } from "@fortaweso
 import logo from '../../assets/logo/logo-dark-transparent.png';
 import { Link, useNavigate } from "react-router-dom";
 import { useProductStore } from "../../store/product.store";
+import { useAuthStore } from "../../store/auth.store";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const fetchProduits = useProductStore((state) => state.fetchProduits);
+  const { access, user, logout } = useAuthStore();
+  const isAuthenticated = !!access;
 
   const handleSearch = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter" && searchValue.trim()) {
       fetchProduits(undefined, searchValue.trim());
       navigate("/Trouver");
     }
+  };
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
   };
 
   return (
@@ -34,22 +42,52 @@ const Navbar = () => {
           <Link to="/Partager" className="font-titre">Partager</Link>
         </div>
 
-        <div className="hidden lg:flex gap-8 text-primaryGreen h-[7vh] justify-end items-center pr-[3vw]">
+        {/* Desktop — droite */}
+        <div className="hidden lg:flex gap-6 text-primaryGreen h-[7vh] justify-end items-center pr-[3vw]">
           <Link to="/Panier">
             <FontAwesomeIcon icon={faShoppingBasket} className="text-[4vh]" />
           </Link>
-          <Link to="/Profil">
-            <FontAwesomeIcon icon={faUser} className="text-[4vh]" />
-          </Link>
+
+          {isAuthenticated ? (
+            <div className="flex items-center gap-3">
+              <Link to="/Profil" className="flex items-center gap-2 hover:opacity-80 transition">
+                <FontAwesomeIcon icon={faUser} className="text-[3vh]" />
+                <span className="text-base font-medium">
+                  {user?.username ?? "Profil"}
+                </span>
+              </Link>
+              <button
+                onClick={handleLogout}
+                className="text-sm border border-primaryGreen px-3 py-1 rounded-lg hover:bg-primaryGreen hover:text-white transition"
+              >
+                Déconnexion
+              </button>
+            </div>
+          ) : (
+            <Link
+              to="/login"
+              className="flex items-center gap-2 bg-primaryGreen text-white px-4 py-2 rounded-xl text-base font-medium hover:opacity-90 transition"
+            >
+              <FontAwesomeIcon icon={faUser} className="text-[2.5vh]" />
+              Se connecter
+            </Link>
+          )}
         </div>
 
+        {/* Mobile */}
         <div className="flex lg:hidden items-center gap-5">
           <Link to="/Panier">
             <FontAwesomeIcon icon={faShoppingBasket} className="text-2xl text-primaryGreen" />
           </Link>
-          <Link to="/Profil">
-            <FontAwesomeIcon icon={faUser} className="text-2xl text-primaryGreen" />
-          </Link>
+          {isAuthenticated ? (
+            <Link to="/Profil">
+              <FontAwesomeIcon icon={faUser} className="text-2xl text-primaryGreen" />
+            </Link>
+          ) : (
+            <Link to="/login">
+              <FontAwesomeIcon icon={faUser} className="text-2xl text-primaryGreen" />
+            </Link>
+          )}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="text-primaryGreen text-2xl focus:outline-none"
@@ -60,6 +98,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Barre de recherche desktop */}
       <div className="hidden lg:flex bg-primaryGreen justify-center items-center h-[7vh] px-8 gap-6">
         <div className="flex items-center border-2 h-[4vh] w-[50%] bg-white text-primaryGreen justify-between px-5 rounded-[10px]">
           <input
@@ -74,6 +113,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Barre de recherche tablette */}
       <div className="hidden md:flex lg:hidden bg-primaryGreen justify-center items-center h-[7vh] px-4">
         <div className="flex items-center border-2 h-[4vh] w-[80%] bg-white text-primaryGreen justify-between px-4 rounded-[10px]">
           <input
@@ -88,6 +128,7 @@ const Navbar = () => {
         </div>
       </div>
 
+      {/* Menu mobile */}
       {menuOpen && (
         <div className="lg:hidden bg-white shadow-lg border-t border-gray-100 w-full">
           <div className="bg-primaryGreen px-4 py-3">
@@ -105,15 +146,26 @@ const Navbar = () => {
           </div>
 
           <div className="flex flex-col text-primaryGreen text-2xl font-medium divide-y divide-gray-100">
-            <Link to="/" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
-              Accueil
-            </Link>
-            <Link to="/Trouver" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
-              Trouver un repas
-            </Link>
-            <Link to="/Partager" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
-              Partager
-            </Link>
+            <Link to="/" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Accueil</Link>
+            <Link to="/Trouver" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Trouver un repas</Link>
+            <Link to="/Partager" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Partager</Link>
+            {isAuthenticated ? (
+              <>
+                <Link to="/Profil" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
+                  Profil ({user?.username ?? ""})
+                </Link>
+                <button
+                  onClick={() => { handleLogout(); setMenuOpen(false); }}
+                  className="font-titre px-6 py-4 text-left text-red-500 hover:bg-gray-50"
+                >
+                  Déconnexion
+                </button>
+              </>
+            ) : (
+              <Link to="/login" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
+                Se connecter
+              </Link>
+            )}
           </div>
         </div>
       )}

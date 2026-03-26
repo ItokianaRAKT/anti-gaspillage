@@ -1,8 +1,5 @@
 import { z } from "zod";
 
-/* =========================
-   LOGIN
-========================= */
 export const loginSchema = z.object({
   username: z.string().min(3, "Le nom d'utilisateur doit contenir au moins 3 caractères"),
   password: z.string().min(6, "Le mot de passe doit contenir au moins 6 caractères"),
@@ -10,9 +7,6 @@ export const loginSchema = z.object({
 
 export type LoginInput = z.infer<typeof loginSchema>;
 
-/* =========================
-   REGISTER
-========================= */
 export const registerSchema = z
   .object({
     username: z.string().min(3, "Le nom d'utilisateur est trop court"),

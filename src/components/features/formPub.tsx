@@ -36,7 +36,7 @@ function PublishProductForm() {
   const defaultPickupTime = "18:00";
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showAuthModal, setShowAuthModal] = useState(false); // ← ajouté
+  const [showAuthModal, setShowAuthModal] = useState(false); 
 
   const [form, setForm] = useState({
     name: "",
@@ -101,7 +101,7 @@ function PublishProductForm() {
       if (form.image) formData.append("image_product", form.image);
 
       await publierProduit(formData);
-      alert("Produit publié !");
+      alert("Produit publié !"); 
 
       setForm({
         name: "",
@@ -117,9 +117,9 @@ function PublishProductForm() {
       });
     } catch (e: any) {
       if (e?.response?.status === 401) {
-        setShowAuthModal(true); // ← affiche la modal si non connecté
+        setShowAuthModal(true);
       } else {
-        alert("Erreur lors de la publication");
+        alert("Erreur lors de la publication"); 
       }
     }
   };

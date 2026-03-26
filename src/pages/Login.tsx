@@ -46,7 +46,7 @@ export default function Login() {
         <div className="absolute top-1/2 left-1/4 w-40 h-40 rounded-full opacity-5" style={{ background: "white" }} />
 
         {/* Logo */}
-        <div className="relative z-10">
+        <div className="mt-10 relative z-10">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-2xl">
               🌿
@@ -77,12 +77,6 @@ export default function Login() {
       {/* Panneau droit — formulaire */}
       <div className="flex-1 flex items-center justify-center p-6 bg-gray-50">
         <div className="w-full max-w-md">
-
-          {/* Header mobile */}
-          <div className="lg:hidden flex items-center gap-2 mb-8">
-            <span className="text-2xl">🌿</span>
-            <span className="text-lg font-bold text-gray-800">AntiGaspillage</span>
-          </div>
 
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
             <div className="mb-8 text-center">

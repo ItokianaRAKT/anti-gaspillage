@@ -63,7 +63,7 @@ export default function Register() {
 
       {/* Panneau gauche */}
       <div
-        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
+        className="mt-10 hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
         style={{ background: "linear-gradient(135deg, #1a4a2e 0%, #2d7a4f 50%, #4caf7d 100%)" }}
       >
         <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full opacity-10 bg-white" />
@@ -97,7 +97,6 @@ export default function Register() {
         </div>
       </div>
 
-      {/* Panneau droit */}
       <div className="flex-1 flex items-center justify-center p-6 bg-gray-50">
         <div className="w-full max-w-md">
 
@@ -112,7 +111,6 @@ export default function Register() {
               <p className="text-gray-500 text-center text-sm">Remplissez les informations ci-dessous</p>
             </div>
 
-            {/* Stepper */}
             <div className="flex items-center gap-2 mb-8">
               {steps.map((s, i) => (
                 <div key={i} className="flex items-center gap-2 flex-1">
