@@ -1,23 +1,53 @@
 import { create } from "zustand";
-import { login } from "../services/auth.service";
 
-interface AuthStore {
-    accessToken: string | null;
-    refreshToken: string | null;
-    connecter: (username: string, password: string) => Promise<void>;
-    deconnecter: () => void;
+interface User {
+  id: number;
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
 }
 
-const useAuthStore = create<AuthStore>((set) => ({
-    accessToken: null,
-    refreshToken: null,
+interface AuthState {
+  access: string | null;
+  refresh: string | null;
+  user: User | null;
 
-    connecter: async (username, password) => {
-        const data = await login(username, password);
-        set({ accessToken: data.access, refreshToken: data.refresh });
-    },
+  isAuthenticated: boolean;
 
-    deconnecter: () => set({ accessToken: null, refreshToken: null }),
+  setTokens: (access: string, refresh: string) => void;
+  setUser: (user: User) => void;
+  logout: () => void;
+}
+
+export const useAuthStore = create<AuthState>((set, get) => ({
+  access: localStorage.getItem("access"),
+  refresh: localStorage.getItem("refresh"),
+  user: null,
+
+  get isAuthenticated() {
+    return !!get().access;
+  },
+
+  setTokens: (access, refresh) => {
+    localStorage.setItem("access", access);
+    localStorage.setItem("refresh", refresh);
+
+    set({ access, refresh });
+  },
+
+  setUser: (user) => {
+    set({ user });
+  },
+
+  logout: () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("refresh");
+
+    set({
+      access: null,
+      refresh: null,
+      user: null,
+    });
+  },
 }));
-
-export { useAuthStore };

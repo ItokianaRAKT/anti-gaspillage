@@ -1,4 +1,4 @@
-import api from "../api/axios";
+import api from "../api/axios"
 import { ProductSchema} from "../schemas/product.schema";
 import type { Product } from "../schemas/product.schema";
 import { z } from "zod";
@@ -17,9 +17,7 @@ const getProduits = async (categoryId?: string, search?: string): Promise<Produc
 }
 
 const publierProduit = async (FormData: FormData) =>{
-    const response = await api.post("/products/create/", FormData, { 
-        headers: {"Content-type": "multipart/form-data"}
-    });
+    const response = await api.post("/products/create/", FormData);
     return response.data
 };
 export { getProduits, publierProduit };
