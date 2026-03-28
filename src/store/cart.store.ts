@@ -2,7 +2,7 @@ import { create } from "zustand";
 
 interface CartItem {
   id_product: string;
-  id_reservation: string | null; // null = pas encore validé
+  id_reservation: string | null;
   nom: string;
   prix: number;
   quantite: number;
