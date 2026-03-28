@@ -39,6 +39,7 @@ export default function Register() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("handleSubmit appelé", form);
     setApiError("");
     const parsed = registerSchema.safeParse(form);
     if (!parsed.success) {

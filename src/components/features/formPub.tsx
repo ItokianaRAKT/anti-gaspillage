@@ -36,14 +36,14 @@ function PublishProductForm() {
   const defaultPickupTime = "18:00";
 
   const [errors, setErrors] = useState<Record<string, string>>({});
-  const [showAuthModal, setShowAuthModal] = useState(false); 
+  const [showAuthModal, setShowAuthModal] = useState(false);
 
   const [form, setForm] = useState({
     name: "",
     description: "",
     type: "",
     price: 0,
-    unit: "pièce",
+    unit: "pièce" as (typeof units)[number],
     stock: 0,
     expiryDate: "",
     address: defaultAddress,
@@ -52,6 +52,7 @@ function PublishProductForm() {
   });
 
   const [categories, setCategories] = useState<Category[]>([]);
+
   useEffect(() => {
     getCategories().then((data) => setCategories(data));
   }, []);
@@ -65,7 +66,17 @@ function PublishProductForm() {
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [name]:
+        name === "price" || name === "stock"
+          ? Number(value)
+          : name === "unit"
+          ? (value as (typeof units)[number])
+          : value,
+    }));
   };
 
   const handleSubmit = async () => {
@@ -95,13 +106,16 @@ function PublishProductForm() {
       formData.append("current_stock", String(result.data.stock));
       formData.append("expiration_date", result.data.expiryDate);
       formData.append("recovery_address", result.data.address);
-      formData.append("recovery_time_limit", `${result.data.expiryDate}T${result.data.pickupTime}:00Z`);
+      formData.append(
+        "recovery_time_limit",
+        `${result.data.expiryDate}T${result.data.pickupTime}:00Z`
+      );
       formData.append("category", result.data.type);
       formData.append("is_available", "true");
       if (form.image) formData.append("image_product", form.image);
 
       await publierProduit(formData);
-      alert("Produit publié !"); 
+      alert("Produit publié !");
 
       setForm({
         name: "",
@@ -118,8 +132,10 @@ function PublishProductForm() {
     } catch (e: any) {
       if (e?.response?.status === 401) {
         setShowAuthModal(true);
+      } else if (e?.response?.data?.price_product) {
+        setErrors({ price: e.response.data.price_product[0] });
       } else {
-        alert("Erreur lors de la publication"); 
+        alert("Erreur lors de la publication");
       }
     }
   };
@@ -232,7 +248,9 @@ function PublishProductForm() {
                 <input
                   type="number"
                   name="stock"
-                  placeholder={`Stock disponible (${form.unit}${form.unit === "pièce" ? "s" : ""})`}
+                  placeholder={`Stock disponible (${form.unit}${
+                    form.unit === "pièce" ? "s" : ""
+                  })`}
                   value={form.stock}
                   onChange={handleChange}
                   min={1}
@@ -255,7 +273,9 @@ function PublishProductForm() {
                   className="border rounded-lg p-3 text-base md:text-lg w-full"
                 />
                 {errors.expiryDate && (
-                  <p className="text-red-500 text-sm mt-1">{errors.expiryDate}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.expiryDate}
+                  </p>
                 )}
               </div>
 
@@ -287,7 +307,9 @@ function PublishProductForm() {
                   className="border rounded-lg p-3 text-base md:text-lg w-full"
                 />
                 {errors.pickupTime && (
-                  <p className="text-red-500 text-sm mt-1">{errors.pickupTime}</p>
+                  <p className="text-red-500 text-sm mt-1">
+                    {errors.pickupTime}
+                  </p>
                 )}
               </div>
             </div>

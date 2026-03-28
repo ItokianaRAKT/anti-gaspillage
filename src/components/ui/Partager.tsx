@@ -6,4 +6,4 @@ function Partager () {
         </>
     )
 }
-export default Partager
+export default Partager;

@@ -42,4 +42,4 @@ function AuthRequiredModal({ onClose }: Props) {
   );
 }
 
-export default AuthRequiredModal;
+export default AuthRequiredModal; 
