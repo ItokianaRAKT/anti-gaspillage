@@ -1,8 +1,10 @@
 import { useState, useEffect } from "react";
 import { z } from "zod";
-import { publierProduit } from "../../services/product.service";
-import { getCategories } from "../../services/category.service";
-import AuthRequiredModal from "../ui/AuthRequiredModal";
+import { publierProduit } from "../../../services/product.service";
+import { getCategories } from "../../../services/category.service";
+import AuthRequiredModal from "../../ui/home/AuthRequiredModal";
+import Toast from "../../ui/Toast";
+import { useAuthStore } from "../../../store/auth.store";
 
 interface Category {
   id_category: string;
@@ -35,8 +37,13 @@ function PublishProductForm() {
   const defaultAddress = "Ivandry, Antananarivo";
   const defaultPickupTime = "18:00";
 
+  const access = useAuthStore((s) => s.access);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [showAuthModal, setShowAuthModal] = useState(false);
+  const [toast, setToast] = useState<{
+    message: string;
+    type: "success" | "error";
+  } | null>(null);
 
   const [form, setForm] = useState({
     name: "",
@@ -64,7 +71,7 @@ function PublishProductForm() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
 
@@ -80,6 +87,12 @@ function PublishProductForm() {
   };
 
   const handleSubmit = async () => {
+    // Vérifier l'auth avant tout
+    if (!access) {
+      setShowAuthModal(true);
+      return;
+    }
+
     const result = productSchema.safeParse({
       ...form,
       price: Number(form.price),
@@ -108,14 +121,16 @@ function PublishProductForm() {
       formData.append("recovery_address", result.data.address);
       formData.append(
         "recovery_time_limit",
-        `${result.data.expiryDate}T${result.data.pickupTime}:00Z`
+        `${result.data.expiryDate}T${result.data.pickupTime}:00Z`,
       );
       formData.append("category", result.data.type);
       formData.append("is_available", "true");
       if (form.image) formData.append("image_product", form.image);
 
       await publierProduit(formData);
-      alert("Produit publié !");
+
+      // ← Toast succès
+      setToast({ message: "Produit publié avec succès !", type: "success" });
 
       setForm({
         name: "",
@@ -135,16 +150,26 @@ function PublishProductForm() {
       } else if (e?.response?.data?.price_product) {
         setErrors({ price: e.response.data.price_product[0] });
       } else {
-        alert("Erreur lors de la publication");
+        // ← Toast erreur
+        setToast({
+          message: "Erreur lors de la publication. Réessayez.",
+          type: "error",
+        });
       }
     }
   };
 
   return (
     <>
-      {/* Modal connexion requise */}
       {showAuthModal && (
         <AuthRequiredModal onClose={() => setShowAuthModal(false)} />
+      )}
+      {toast && (
+        <Toast
+          message={toast.message}
+          type={toast.type}
+          onClose={() => setToast(null)}
+        />
       )}
 
       <section className="w-full px-4 md:px-8">
@@ -326,7 +351,6 @@ function PublishProductForm() {
                   <span className="text-gray-400 text-sm">image</span>
                 )}
               </div>
-
               <input
                 type="file"
                 accept="image/*"

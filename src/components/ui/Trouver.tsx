@@ -1,11 +1,9 @@
-
-import Liste from "../features/listeProduits"
-function Trouver () {
-    return (
-        <>
-            
-            <Liste />
-        </>
-    )
+import Liste from "../features/produits/listeProduits";
+function Trouver() {
+  return (
+    <>
+      <Liste />
+    </>
+  );
 }
-export default Trouver
+export default Trouver;

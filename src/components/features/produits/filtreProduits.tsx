@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
-import { getCategories } from "../../services/category.service";
-import { useProductStore } from "../../store/product.store";
+import { getCategories } from "../../../services/category.service";
+import { useProductStore } from "../../../store/product.store";
 
 interface Category {
     id_category: string;

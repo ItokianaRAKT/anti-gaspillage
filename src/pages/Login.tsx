@@ -7,6 +7,7 @@ import { useAuthStore } from "../store/auth.store";
 export default function Login() {
   const navigate = useNavigate();
   const setTokens = useAuthStore((s) => s.setTokens);
+  const setUser = useAuthStore((s) => s.setUser);
   const [form, setForm] = useState<LoginInput>({ username: "", password: "" });
   const [errors, setErrors] = useState<Record<string, string[]>>({});
   const [loading, setLoading] = useState(false);
@@ -25,6 +26,10 @@ export default function Login() {
     try {
       const data = await authService.login(parsed.data);
       setTokens(data.access, data.refresh);
+
+      const profile = await authService.getProfile();
+      setUser(profile);
+
       navigate("/");
     } catch (error) {
       setApiError("Identifiants invalides. Vérifiez votre nom d'utilisateur et mot de passe.");

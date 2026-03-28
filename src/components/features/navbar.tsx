@@ -36,10 +36,14 @@ const Navbar = () => {
           <img src={logo} alt="Logo" className="h-[6vh] w-auto" />
         </Link>
 
-        <div className="hidden lg:flex space-x-36 text-primaryGreen text-2xl font-medium">
+        {/* Desktop — liens nav */}
+        <div className="hidden lg:flex space-x-16 text-primaryGreen text-2xl font-medium">
           <Link to="/" className="font-titre">Accueil</Link>
           <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
           <Link to="/Partager" className="font-titre">Partager</Link>
+          {isAuthenticated && (
+            <Link to="/MesProduits" className="font-titre">Mes produits</Link>
+          )}
         </div>
 
         {/* Desktop — droite */}
@@ -149,10 +153,15 @@ const Navbar = () => {
             <Link to="/" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Accueil</Link>
             <Link to="/Trouver" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Trouver un repas</Link>
             <Link to="/Partager" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>Partager</Link>
+            {isAuthenticated && (
+              <Link to="/MesProduits" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
+                Mes produits
+              </Link>
+            )}
             {isAuthenticated ? (
               <>
                 <Link to="/Profil" className="font-titre px-6 py-4 hover:bg-gray-50" onClick={() => setMenuOpen(false)}>
-                  Profil ({user?.username ?? ""})
+                  {user?.username ?? "profil"}
                 </Link>
                 <button
                   onClick={() => { handleLogout(); setMenuOpen(false); }}

@@ -16,6 +16,10 @@ const annulerReservation = async (id_reservation: string) => {
     return response.data;
 };
 
-export { createReservation }
-export { annulerReservation 
-}
+const collecterReservation = async (id_reservation: string) => {
+  const response = await api.post(`/reservations/${id_reservation}/collect/`);
+  return response.data;
+};
+ 
+
+export { createReservation, annulerReservation, collecterReservation }
