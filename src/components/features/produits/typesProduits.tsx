@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faBreadSlice, faStore, faShop, faCarrot } from "@fortawesome/free-solid-svg-icons"
-import imgTypes from "../../assets/lol.jpg"
+import imgTypes from "../../../assets/lol.jpg"
 import { motion } from "framer-motion"
 
 const items = [

@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import CarteItem from "./carteProduit";
-import Defaut from "../../assets/légumes.jpg";
+import Defaut from "../../../assets/légumes.jpg";
 import Filtre from "./filtreProduits";
 import { useProductStore } from "../../../store/product.store";
 
