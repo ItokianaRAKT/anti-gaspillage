@@ -23,7 +23,7 @@ const Filtre = () => {
 
     return (
         <div className="flex overflow-x-auto mb-6 px-4 gap-2 scrollbar-hide
-                        md:flex-wrap md:justify-center md:overflow-visible md:mb-8 md:gap-0">
+                         md:justify-center md:overflow-visible md:mb-8 md:gap-0">
             <button
                 onClick={() => handleSelect(null)}
                 className={`

@@ -16,6 +16,9 @@ const ProfilInfo = () => {
           <strong>Date d'inscription: </strong>27 mars 2020.
         </p>
         <p>
+          <strong>Produits partagés ces 3 derniers mois: </strong> 46 
+        </p>
+        <p>
           <strong>Produits total paratgés: </strong> 96 
         </p>
       </div>
