@@ -12,9 +12,10 @@ interface ComposantsCartes {
   adresse: string;
   prix: number;
   image: string;
+  description: string;
 }
 
-const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: ComposantsCartes) => {
+const CarteProduit = ({ id_product, nom, stock, adresse, prix, image, description }: ComposantsCartes) => {
   const [quantity, setQuantity] = useState<number>(1);
   const [isOpen, setIsOpen] = useState(false);
   const [showAuthModal, setShowAuthModal] = useState(false);
@@ -30,7 +31,6 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
   };
 
   const handleAjouter = () => {
-    // id_reservation null → pas encore réservé, juste dans le panier local
     ajouterArticle({ id_product, id_reservation: null, nom, prix, quantite: quantity, adresse, image });
     setIsOpen(false);
     setQuantity(1);
@@ -57,6 +57,7 @@ const CarteProduit = ({ id_product, nom, stock, adresse, prix, image }: Composan
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
           <div className="bg-white p-6 rounded-xl w-full max-w-xs relative">
             <p className="mb-2 font-semibold">{nom} — {adresse}</p>
+            {description && <p className="text-gray-500 text-sm mb-2">{description}</p>}
             <p className="mb-2">Quantité</p>
             <div className="flex items-center justify-center gap-4 mb-4">
               <button onClick={() => setQuantity(prev => Math.max(1, prev - 1))} className="px-3 py-1 bg-gray-200 rounded-lg text-xl">-</button>

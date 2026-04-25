@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import CarteItem from "./carteProduit";
 import legume from "../../../assets/légumes.jpg";
 import boulangerie from "../../../assets/pain.jpg";
@@ -26,13 +26,26 @@ const imageParCategorie: Record<string, string> = {
   "d8d5f1e1-561b-46ad-a6e8-899a6dc2cf5e": autre
 };
 
+const getColonnes = () => {
+  if (window.innerWidth >= 1280) return 5;
+  if (window.innerWidth >= 1024) return 4;
+  if (window.innerWidth >= 640) return 3;
+  return 2;
+};
+
+const LIGNES_INITIALES = 5;
+
 const ListeProduits = () => {
-  const { produits, loading, erreur, fetchProduits, searchActif } =
-    useProductStore();
+  const { produits, loading, erreur, fetchProduits, searchActif } = useProductStore();
+  const [lignesVisibles, setLignesVisibles] = useState(LIGNES_INITIALES);
 
   useEffect(() => {
     fetchProduits(undefined, searchActif);
   }, []);
+
+const colonnes = getColonnes();
+const produitsVisibles = produits.slice(0, lignesVisibles * colonnes);
+  const aEncoreDesProduits = produitsVisibles.length < produits.length;
 
   return (
     <section className="mt-20 px-4 md:px-8">
@@ -45,7 +58,7 @@ const ListeProduits = () => {
       {erreur && <p className="text-center text-red-500">{erreur}</p>}
 
       <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-        {produits.map((p) => (
+        {produitsVisibles.map((p) => (
           <CarteItem
             key={p.id_product}
             id_product={p.id_product}
@@ -54,9 +67,29 @@ const ListeProduits = () => {
             adresse={p.recovery_address}
             prix={p.price_product}
             image={p.image_product || (p.category ? imageParCategorie[p.category] : autre)}
+            description={p.description_product}
           />
         ))}
       </div>
+
+      <div className="flex justify-end mt-4 mb-8 gap-4">
+  {lignesVisibles > LIGNES_INITIALES && (
+    <button
+      onClick={() => setLignesVisibles(LIGNES_INITIALES)}
+      className="text-gray-400 font-medium hover:underline"
+    >
+      ← Voir moins
+    </button>
+  )}
+  {aEncoreDesProduits && (
+    <button
+      onClick={() => setLignesVisibles(prev => prev + LIGNES_INITIALES)}
+      className="text-primaryGreen font-medium hover:underline"
+    >
+      Voir plus →
+    </button>
+  )}
+</div>
     </section>
   );
 };

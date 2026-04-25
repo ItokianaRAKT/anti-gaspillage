@@ -34,7 +34,7 @@ const RankingSection = () => {
     <section className="ranking-card">
       <div className="ranking-header">
         <div>
-          <h2>Classement</h2>
+          <h2>Classement trimestriel</h2>
           <div className="section-underline"></div>
         </div>
         <span className="ranking-star">☆</span>

@@ -1,7 +1,28 @@
 import { useEffect, useState } from "react";
 import api from "../../../api/axios";
-import Defaut from "../../../assets/légumes.jpg";
+import legume from "../../../assets/légumes.jpg";
+import boulangerie from "../../../assets/pain.jpg";
+import laitier from "../../../assets/cremerie.jpeg";
+import viande from "../../../assets/viande.jpg";
+import fruitDeMer from "../../../assets/fruitsDeMer.jpg";
+import epicerie from "../../../assets/epicerie.jpg";
+import boisson from "../../../assets/boisson.jpeg";
+import cuisiné from "../../../assets/invendus.png";
+import dessert from "../../../assets/dessert.jpg";
+import autre from "../../../assets/autre.jpg";
 
+const imageParCategorie: Record<string, string> = {
+  "3aec946b-1710-4180-928a-5a6c6cd4d59d": boulangerie,
+  "b57d32d0-d224-4253-9bed-6dc647c89d9d": legume,
+  "397f5610-7eac-470a-a162-b1b765ac9c4c": laitier,
+  "02b9e2fe-a8cc-4939-9871-566dd1ac4282": viande,
+  "c0cd1bff-13ad-498d-8323-418dd79c860a": fruitDeMer,
+  "31356d18-8231-48e7-8513-c0d1d4c99e7d": epicerie,
+  "d5840f1a-a73e-4707-9eb3-af6e60420ca8": boisson,
+  "60a65e91-878c-43d1-8b66-fc8e6f2c0b39": cuisiné,
+  "76bd1c6c-7686-46d4-8593-15145664e389": dessert,
+  "d8d5f1e1-561b-46ad-a6e8-899a6dc2cf5e": autre
+};
 interface Reservateur {
   id_user: string;
   username: string;
@@ -24,12 +45,13 @@ interface Reservation {
 interface MonProduit {
   id_product: string;
   name_product: string;
-  price_product: number;
+  price_product: number | string;
   current_stock: number;
   initial_stock: number;
   image_product: string | null;
   expiration_date: string;
   is_available: boolean;
+  category?: string;
   reservations: Reservation[];
 }
 
@@ -47,8 +69,13 @@ export default function MesProduits() {
 
   useEffect(() => {
     api.get("/products/my/")
-      .then((res) => setProduits(res.data))
-      .catch(() => {})
+      .then((res) => {
+        console.log("Produits reçus:", res.data);
+        setProduits(res.data);
+      })
+      .catch((err) => {
+        console.error("Erreur:", err.response?.status, err.response?.data);
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -57,14 +84,14 @@ export default function MesProduits() {
       <p className="text-gray-400 text-lg">Chargement...</p>
     </div>
   );
-
+  console.log("produits.length:", produits.length, "loading:", loading);
   return (
     <div className="max-w-5xl mx-auto mt-24 md:mt-32 px-4 md:px-8 pb-16">
-      <h1 className="text-primaryGreen text-4xl md:text-5xl font-titre mb-10 text-center">
+      <h1 className="text-primaryGreen mt-42 text-4xl md:text-5xl font-titre mb-10 text-center">
         Mes produits
       </h1>
 
-      {produits.length === 0 ? (
+      {produits.length === 0 ?(
         <p className="text-center text-gray-400 text-xl mt-20">
           Vous n'avez pas encore publié de produit.
         </p>
@@ -76,7 +103,11 @@ export default function MesProduits() {
               {/* Header produit */}
               <div className="flex items-center gap-4 p-5 border-b border-gray-100">
                 <img
-                  src={produit.image_product ? `http://127.0.0.1:8000${produit.image_product}` : Defaut}
+                  src={
+                    produit.image_product
+                    ? `http://127.0.0.1:8000${produit.image_product}`
+                    : (produit.category ? imageParCategorie[produit.category] : autre)
+                }
                   alt={produit.name_product}
                   className="w-16 h-16 rounded-xl object-cover shrink-0"
                 />
@@ -87,13 +118,13 @@ export default function MesProduits() {
                     <span>·</span>
                     <span>DLC : <strong>{produit.expiration_date}</strong></span>
                     <span>·</span>
-                    <span>{produit.price_product === 0 ? <strong className="text-green-600">Gratuit</strong> : <strong>{produit.price_product} Ar</strong>}</span>
+                    {Number(produit.price_product) === 0 ? <strong className="text-green-600">Gratuit</strong> : <strong>{produit.price_product} Ar</strong>}
                   </div>
                 </div>
                 <span className={`text-xs px-3 py-1 rounded-full font-medium shrink-0 ${produit.is_available ? "bg-green-100 text-green-700" : "bg-gray-100 text-gray-500"}`}>
                   {produit.is_available ? "Disponible" : "Indisponible"}
                 </span>
-              </div>
+              </div> 
 
               {/* Réservations */}
               <div className="p-5">

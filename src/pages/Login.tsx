@@ -7,6 +7,7 @@ import { useAuthStore } from "../store/auth.store";
 export default function Login() {
   const navigate = useNavigate();
   const setTokens = useAuthStore((s) => s.setTokens);
+  const fetchUser = useAuthStore((s) => s.fetchUser);
   const setUser = useAuthStore((s) => s.setUser);
   const [form, setForm] = useState<LoginInput>({ username: "", password: "" });
   const [errors, setErrors] = useState<Record<string, string[]>>({});
@@ -26,7 +27,8 @@ export default function Login() {
     try {
       const data = await authService.login(parsed.data);
       setTokens(data.access, data.refresh);
-
+      await fetchUser();
+      navigate("/");
       const profile = await authService.getProfile();
       setUser(profile);
 

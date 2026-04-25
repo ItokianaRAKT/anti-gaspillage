@@ -3,7 +3,7 @@ import { Box } from '@mui/material';
 
 const xLabels = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 const uData = [12, 8, 15, 20, 10, 18, 14];
-const commuData = [10, 12, 11, 15, 14, 12, 13];
+const commuData = [20, 12, 21, 15, 34, 32, 30];
 
 const StatHebdo = () => {
   return (

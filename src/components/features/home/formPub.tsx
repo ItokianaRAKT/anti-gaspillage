@@ -30,6 +30,7 @@ const productSchema = z.object({
   stock: z.number().positive("Stock invalide"),
   expiryDate: z.string().min(1, "Veuillez entrer la DLC"),
   address: z.string().min(1, "Veuillez entrer une adresse"),
+  quartier: z.string().min(1, "Veuillez entrer votre quartier"),
   pickupTime: z.string().min(1, "Veuillez entrer une heure de retrait"),
 });
 
@@ -53,7 +54,8 @@ function PublishProductForm() {
     unit: "pièce" as (typeof units)[number],
     stock: 0,
     expiryDate: "",
-    address: defaultAddress,
+    address: "",
+    quartier: "",
     pickupTime: defaultPickupTime,
     image: null as File | null,
   });
@@ -118,7 +120,7 @@ function PublishProductForm() {
       formData.append("initial_stock", String(result.data.stock));
       formData.append("current_stock", String(result.data.stock));
       formData.append("expiration_date", result.data.expiryDate);
-      formData.append("recovery_address", result.data.address);
+      formData.append("recovery_address", `${result.data.address}, ${form.quartier}, Antananarivo`);
       formData.append(
         "recovery_time_limit",
         `${result.data.expiryDate}T${result.data.pickupTime}:00Z`,
@@ -141,6 +143,7 @@ function PublishProductForm() {
         stock: 0,
         expiryDate: "",
         address: defaultAddress,
+        quartier: "",
         pickupTime: defaultPickupTime,
         image: null,
       });
@@ -305,19 +308,33 @@ function PublishProductForm() {
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-600 mb-1">
-                  Adresse de récupération
-                </label>
-                <input
-                  type="text"
-                  name="address"
-                  value={form.address}
-                  onChange={handleChange}
-                  className="border rounded-lg p-3 text-base md:text-lg w-full"
-                />
-                {errors.address && (
-                  <p className="text-red-500 text-sm mt-1">{errors.address}</p>
-                )}
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                      Quartier
+                  </label>
+                  <input
+                      type="text"
+                      name="quartier"
+                      placeholder="Ex: Ivandry"
+                      value={form.quartier}
+                      onChange={handleChange}
+                      className="border rounded-lg p-3 text-base md:text-lg w-full"
+                  />
+                  {errors.quartier && <p className="text-red-500 text-sm mt-1">{errors.quartier}</p>}
+              </div>
+
+              <div>
+                  <label className="block text-sm font-medium text-gray-600 mb-1">
+                      Adresse exacte
+                  </label>
+                  <input
+                      type="text"
+                      name="address"
+                      placeholder="Ex: II J 161 R Ambodivoanjo"
+                      value={form.address}
+                      onChange={handleChange}
+                      className="border rounded-lg p-3 text-base md:text-lg w-full"
+                  />
+                  {errors.address && <p className="text-red-500 text-sm mt-1">{errors.address}</p>}
               </div>
 
               <div>

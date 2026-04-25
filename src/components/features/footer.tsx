@@ -35,6 +35,7 @@ const Footer = () => {
                 <Link to="/" className="font-titre">Accueil</Link>
                 <Link to="/Trouver" className="font-titre">Trouver un repas</Link>
                 <Link to="/Partager" className="font-titre">Partager</Link>
+                <Link to="/MesProduits" className="font-titre">Mes produits</Link>
                 <Link to="/Panier" className="font-titre">Panier</Link>
             </div>
 

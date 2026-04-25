@@ -28,11 +28,11 @@ const Confiance = () => {
                     Faites nous confiance
                 </motion.p>
 
-                <div className="hidden sm:flex justify-between gap-6 leading-relaxed text-xl md:text-2xl font-contenu w-full max-w-5xl">
+                <div className="hidden sm:grid grid-cols-3 gap-6 lg:gap-24 leading-relaxed text-xl md:text-2xl font-contenu w-full max-w-6xl">
                     {blocs.map((bloc, i) => (
                         <motion.div
                             key={bloc.titre}
-                            className="w-[30%] flex flex-col text-justify"
+                            className="flex flex-col text-justify"
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.4 }}

@@ -12,6 +12,8 @@ const ProductSchema = z.object({
     is_available: z.boolean(),
     category: z.string().nullable(),
     image_product:z.string().nullable().optional(),
+    latitude: z.coerce.number().nullable().optional(),
+    longitude: z.coerce.number().nullable().optional(),
 })
 type Product = z.infer<typeof ProductSchema>;
 export {ProductSchema};
