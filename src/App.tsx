@@ -32,7 +32,7 @@ function ApiTester() {
 
 function App() {
   return (
-    <BrowserRouter basename="/anti-gaspillage">
+    <BrowserRouter>
       {/* 🧪 TEST API GLOBAL */}
       <ApiTester />
 
