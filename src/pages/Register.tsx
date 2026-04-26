@@ -38,24 +38,34 @@ export default function Register() {
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    console.log("handleSubmit appelé", form);
-    setApiError("");
-    const parsed = registerSchema.safeParse(form);
-    if (!parsed.success) {
-      setErrors(parsed.error.flatten().fieldErrors);
-      return;
-    }
-    setLoading(true);
-    try {
-      await authService.register(parsed.data);
-      navigate("/login");
-    } catch (error) {
-      setApiError("Une erreur est survenue. Vérifiez vos informations.");
-    } finally {
-      setLoading(false);
-    }
-  };
+  e.preventDefault();
+
+  console.log("handleSubmit appelé", form);
+  console.log("REGISTER PAYLOAD =>", form);
+
+  setApiError("");
+
+  const parsed = registerSchema.safeParse(form);
+
+  if (!parsed.success) {
+    console.log("ERREURS VALIDATION =>", parsed.error.flatten());
+    setErrors(parsed.error.flatten().fieldErrors);
+    return;
+  }
+
+  console.log("REGISTER PAYLOAD VALIDÉ =>", parsed.data);
+
+  setLoading(true);
+
+  try {
+    await authService.register(parsed.data);
+    navigate("/login");
+  } catch (error) {
+    setApiError("Une erreur est survenue. Vérifiez vos informations.");
+  } finally {
+    setLoading(false);
+  }
+};
 
   const inputClass = "w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 transition bg-gray-50";
 
