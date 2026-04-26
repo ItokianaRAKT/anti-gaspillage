@@ -17,7 +17,7 @@ import { ProtectedRoute } from "./components/features/layout/ProtectedRoute";
 
 function ApiTester() {
   useEffect(() => {
-    api.get("/api/produits/")
+    api.get("/produits/")
       .then((res) => {
         console.log("🔥 API PRODUITS OK:", res.data);
       })
