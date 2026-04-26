@@ -1,4 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useEffect } from "react";
+import api from "./api/axios";
+
 import Navbar from "./components/features/navbar";
 import Accueil from "./components/ui/home/Accueil";
 import Trouver from "./components/ui/Trouver";
@@ -10,10 +13,29 @@ import Footer from "./components/features/footer";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import { ProtectedRoute } from "./components/features/layout/ProtectedRoute";
+
+function ApiTester() {
+  useEffect(() => {
+    api.get("/api/produits/")
+      .then((res) => {
+        console.log("🔥 API PRODUITS OK:", res.data);
+      })
+      .catch((err) => {
+        console.error("💀 API ERROR:", err);
+      });
+  }, []);
+
+  return null; // invisible component
+}
+
 function App() {
   return (
     <BrowserRouter basename="/anti-gaspillage">
+      {/* 🧪 TEST API GLOBAL */}
+      <ApiTester />
+
       <Navbar />
+
       <Routes>
         <Route path="/" element={<Accueil />} />
         <Route path="/login" element={<Login />} />
@@ -33,6 +55,7 @@ function App() {
           }
         />
       </Routes>
+
       <Footer />
     </BrowserRouter>
   );
