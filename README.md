@@ -21,7 +21,7 @@ Plateforme de don et récupération d'invendus alimentaires à Madagascar.
 git clone https://github.com/fatratra-png/itokiana-tsinjo-front.git
 
 # Change direction to the cloned project
-cd anti-gaspillage
+cd itokiana-tsinjo-front
 
 # Installer
 npm install
