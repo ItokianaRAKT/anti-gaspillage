@@ -1,4 +1,4 @@
-# AzaMandany - Anti-gaspillage alimentaire Madagascar
+# Tsinjo - Tsinjovy ireo izay tsy manana
 
 🇲🇬 **Ne gaspillez pas, partagez !** 
 
