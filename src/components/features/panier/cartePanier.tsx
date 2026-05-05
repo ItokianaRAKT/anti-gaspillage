@@ -6,7 +6,7 @@
  */
 
 import { useState } from "react";
-import { Trash2, X, Check, MapPin } from "lucide-react";
+import { Trash2, X, Check} from "lucide-react";
 
 interface CartItemProps {
   nom: string;
