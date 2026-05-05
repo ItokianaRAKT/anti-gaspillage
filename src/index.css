@@ -1,16 +1,19 @@
 @import "tailwindcss";
 
 @config "../tailwind.config.js";
+
+/* ── Typographie globale ── */
 h1, h2, h3 {
   font-family: 'Playfair Display', serif;
-
 }
 
 body {
-    font-family: 'DM Sans', sans-serif;
-    
+  font-family: 'DM Sans', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
+/* ── Reset boîte ── */
 html, body, #root {
   width: 100%;
   max-width: 100%;
@@ -18,16 +21,30 @@ html, body, #root {
   padding: 0;
   box-sizing: border-box;
 }
-* {
+
+*, *::before, *::after {
   box-sizing: border-box;
 }
 
-html {
-  overflow-x: hidden;
-}
+/* ── Overflow horizontal ── */
+html { overflow-x: hidden; }
+body { overflow-x: clip; width: 100%; }
 
-body {
-  overflow-x: clip;
-  width: 100%;
-}
+/* ── Scrollbar discrète ── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: #2E6F40; }
 
+/* ── Scrollbar horizontale cachée (filtres) ── */
+.scrollbar-hide::-webkit-scrollbar { display: none; }
+.scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+
+/* ── Sélection de texte ── */
+::selection { background: #2E6F40; color: white; }
+
+/* ── Transition douce par défaut sur les liens ── */
+a { transition: color 0.2s ease, opacity 0.2s ease; }
+
+/* ── Leaflet z-index fix (sous la navbar fixe) ── */
+.leaflet-control { z-index: 10 !important; }

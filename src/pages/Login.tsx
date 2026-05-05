@@ -1,8 +1,17 @@
+/**
+ * Login — Redesign premium
+ * - Icônes Lucide React (remplacement emojis)
+ * - Panneau gauche avec pattern décoratif SVG
+ * - Formulaire avec focus states élégants
+ * - Bouton de chargement amélioré
+ */
+
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { loginSchema, type LoginInput } from "../schemas/auth.schema";
 import { authService } from "../services/auth.service";
 import { useAuthStore } from "../store/auth.store";
+import { User, Lock, Eye, EyeOff, AlertCircle, Loader2, Leaf, ArrowRight } from "lucide-react";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -31,7 +40,6 @@ export default function Login() {
       navigate("/");
       const profile = await authService.getProfile();
       setUser(profile);
-
       navigate("/");
     } catch (error) {
       setApiError("Identifiants invalides. Vérifiez votre nom d'utilisateur et mot de passe.");
@@ -40,145 +48,152 @@ export default function Login() {
     }
   };
 
+  const inputClass = (hasError?: boolean) =>
+    `w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all duration-200 bg-gray-50 outline-none focus:bg-white focus:ring-2 focus:ring-primaryGreen/20 ${
+      hasError ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-primaryGreen"
+    }`;
+
   return (
-    <div className="min-h-screen flex" style={{ fontFamily: "'DM Sans', sans-serif" }}>
-      {/* Panneau gauche — décoratif */}
+    <div className="min-h-screen flex font-contenu">
+      
+      {/* Panneau gauche décoratif */}
       <div
-        className="hidden lg:flex lg:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
-        style={{ background: "linear-gradient(135deg, #1a4a2e 0%, #2d7a4f 50%, #4caf7d 100%)" }}
+        className="hidden lg:flex lg:w-5/12 xl:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
+        style={{ background: "linear-gradient(145deg, #1a4a2e 0%, #2E6F40 60%, #4caf7d 100%)" }}
       >
         {/* Cercles décoratifs */}
-        <div className="absolute -top-20 -left-20 w-80 h-80 rounded-full opacity-10" style={{ background: "white" }} />
-        <div className="absolute bottom-20 -right-10 w-60 h-60 rounded-full opacity-10" style={{ background: "white" }} />
-        <div className="absolute top-1/2 left-1/4 w-40 h-40 rounded-full opacity-5" style={{ background: "white" }} />
+        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/5" />
+        <div className="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-white/5" />
+        <div className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-white/3" />
 
         {/* Logo */}
-        <div className="mt-10 relative z-10">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-white/20 flex items-center justify-center text-2xl">
-              🌿
-            </div>
-            <span className="text-white text-xl font-bold tracking-tight">AntiGaspillage</span>
+        <div className="relative z-10 flex items-center gap-3">
+          <div className="w-10 h-10 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
+            <Leaf size={20} className="text-white" />
           </div>
+          <span className="text-white text-lg font-bold tracking-tight font-titre">AntiGaspillage</span>
         </div>
 
-        {/* Citation */}
-        <div className="relative z-10">
-          <p className="text-white/90 text-3xl font-light leading-relaxed mb-6">
-            Ensemble, réduisons<br />
-            <span className="font-bold text-white">le gaspillage alimentaire</span><br />
-            à Madagascar.
-          </p>
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center text-sm font-bold text-white">
-              AG
-            </div>
-            <div>
-              <p className="text-white text-sm font-medium">Communauté AntiGaspillage</p>
-              <p className="text-white/60 text-xs">Plus de 1000 produits sauvés</p>
-            </div>
+        {/* Citation centrale */}
+        <div className="relative z-10 space-y-8">
+          <div>
+            <p className="text-white/80 text-sm font-medium mb-3 uppercase tracking-widest">Notre mission</p>
+            <h2 className="text-white text-4xl font-light font-titre leading-tight">
+              Ensemble, réduisons<br />
+              <span className="font-bold">le gaspillage</span><br />
+              alimentaire.
+            </h2>
+          </div>
+
+          {/* Stats */}
+          <div className="grid grid-cols-2 gap-3">
+            {[
+              { value: "1 000+", label: "Produits sauvés" },
+              { value: "500+", label: "Membres actifs" },
+              { value: "0 Ar", label: "Pour s'inscrire" },
+              { value: "90j", label: "Suivi communauté" },
+            ].map((stat) => (
+              <div key={stat.label} className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
+                <p className="text-white text-2xl font-bold">{stat.value}</p>
+                <p className="text-white/60 text-xs mt-0.5 font-contenu">{stat.label}</p>
+              </div>
+            ))}
           </div>
         </div>
       </div>
 
       {/* Panneau droit — formulaire */}
-      <div className="flex-1 flex items-center justify-center p-6 bg-gray-50">
+      <div className="flex-1 flex items-center justify-center p-6 bg-gray-50 min-h-screen">
         <div className="w-full max-w-md">
 
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-            <div className="mb-8 text-center">
-              <h1 className="text-2xl font-bold text-gray-900 mb-3">Bon retour</h1>
-              <p className="text-gray-500 text-sm">Connectez-vous à votre compte</p>
+          {/* Logo mobile */}
+          <div className="lg:hidden flex items-center gap-2 mb-8">
+            <div className="w-8 h-8 rounded-xl bg-primaryGreen flex items-center justify-center">
+              <Leaf size={16} className="text-white" />
+            </div>
+            <span className="text-lg font-bold text-gray-800 font-titre">AntiGaspillage</span>
+          </div>
+
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
+            <div className="mb-8">
+              <h1 className="text-2xl font-bold text-gray-900 mb-2 font-titre">Bon retour 👋</h1>
+              <p className="text-gray-500 text-sm">Connectez-vous à votre compte pour continuer.</p>
             </div>
 
             {/* Erreur API */}
             {apiError && (
-              <div className="mb-5 p-3 rounded-xl bg-red-50 border border-red-100 flex items-start gap-2">
-                <span className="text-red-500 mt-0.5">⚠️</span>
+              <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
+                <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" />
                 <p className="text-red-600 text-sm">{apiError}</p>
               </div>
             )}
 
             <form onSubmit={handleSubmit} className="space-y-5">
+              
               {/* Username */}
               <div>
                 <label className="block text-sm font-medium text-gray-700 mb-1.5">
                   Nom d'utilisateur
                 </label>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">👤</span>
+                  <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type="text"
                     placeholder="votre_username"
                     value={form.username}
                     onChange={(e) => setForm({ ...form, username: e.target.value })}
-                    className="w-full pl-10 pr-4 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 transition bg-gray-50"
+                    className={inputClass(!!errors.username)}
                   />
                 </div>
-                {errors.username && (
-                  <p className="text-red-500 text-xs mt-1">{errors.username[0]}</p>
-                )}
+                {errors.username && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><AlertCircle size={12} />{errors.username[0]}</p>}
               </div>
 
               {/* Password */}
               <div>
                 <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-sm font-medium text-gray-700">
-                    Mot de passe
-                  </label>
-                  <button
-                    type="button"
-                    onClick={() => navigate("/forgot-password")}
-                    className="text-xs text-green-600 hover:text-green-700 font-medium transition"
-                  >
+                  <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
+                  <button type="button" onClick={() => navigate("/forgot-password")} className="text-xs text-primaryGreen hover:text-primaryGreen/80 font-medium transition-colors">
                     Mot de passe oublié ?
                   </button>
                 </div>
                 <div className="relative">
-                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">🔒</span>
+                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={form.password}
                     onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className="w-full pl-10 pr-12 py-3 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-green-500/30 focus:border-green-500 transition bg-gray-50"
+                    className={`${inputClass(!!errors.password)} pr-12`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition text-sm"
+                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   >
-                    {showPassword ? "🙈" : "👁️"}
+                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
                   </button>
                 </div>
-                {errors.password && (
-                  <p className="text-red-500 text-xs mt-1">{errors.password[0]}</p>
-                )}
+                {errors.password && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><AlertCircle size={12} />{errors.password[0]}</p>}
               </div>
 
               {/* Bouton */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3 rounded-xl text-white font-semibold text-sm transition-all disabled:opacity-60 disabled:cursor-not-allowed"
-                style={{ background: loading ? "#ccc" : "linear-gradient(135deg, #1a4a2e, #2d7a4f)" }}
+                className="w-full py-3.5 rounded-xl text-white font-semibold text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-primaryGreen/20 hover:shadow-lg hover:shadow-primaryGreen/25 hover:-translate-y-0.5"
+                style={{ background: "linear-gradient(135deg, #1a4a2e, #2E6F40)" }}
               >
                 {loading ? (
-                  <span className="flex items-center justify-center gap-2">
-                    <svg className="animate-spin h-4 w-4 text-white" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
-                    </svg>
-                    Connexion...
-                  </span>
-                ) : "Se connecter"}
+                  <><Loader2 size={16} className="animate-spin" /> Connexion...</>
+                ) : (
+                  <> Se connecter <ArrowRight size={16} /></>
+                )}
               </button>
             </form>
 
-            {/* Lien vers register */}
             <p className="mt-6 text-center text-sm text-gray-500">
               Pas encore de compte ?{" "}
-              <Link to="/register" className="text-green-600 font-semibold hover:text-green-700 transition">
+              <Link to="/register" className="text-primaryGreen font-semibold hover:text-primaryGreen/80 transition-colors">
                 S'inscrire gratuitement
               </Link>
             </p>

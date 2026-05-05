@@ -47,5 +47,18 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.48.0",
     "vite": "^7.3.1"
-  }
+  },
+  "description": "🇲🇬 **Ne gaspillez pas, partagez !**",
+  "main": "eslint.config.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fatratra-png/itokiana-tsinjo-front.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fatratra-png/itokiana-tsinjo-front/issues"
+  },
+  "homepage": "https://github.com/fatratra-png/itokiana-tsinjo-front#readme"
 }
