@@ -1,10 +1,8 @@
 /**
- * Navbar — Redesign "Mountain Waves" avec vagues animées
- * - Fond vert sombre identique au footer
- * - Vagues SVG animées EN BAS (translateX GPU, boucle seamless)
- * - Texte et icônes blancs/translucides
- * - Liens actifs avec barre blanche
- * - Badge panier vert clair
+ * Navbar — Redesign "Mountain Waves"
+ * - Hauteur des vagues réduite pour plus de discrétion
+ * - Z-index maximum [9999]
+ * - Respiration optimisée sans ajout de lignes superflues
  */
 
 import { useState, useEffect, useRef } from "react";
@@ -76,11 +74,12 @@ const Navbar = () => {
   ];
 
   return (
-    <div className="fixed top-0 left-0 right-0 z-50">
+    <div className="fixed top-0 left-0 right-0 z-[9999]">
       {/* ════════════════════════════════════════
-          BARRE PRINCIPALE — fond vert sombre
+          BARRE PRINCIPALE
       ════════════════════════════════════════ */}
       <nav
+        className="relative z-10"
         style={{
           background:
             "linear-gradient(135deg, #0d2e1a 0%, #1a4a2e 55%, #2E6F40 100%)",
@@ -159,7 +158,6 @@ const Navbar = () => {
 
           {/* Actions droite */}
           <div className="flex items-center gap-1.5 ml-3">
-            {/* Panier */}
             <Link
               to="/Panier"
               aria-label="Panier"
@@ -180,7 +178,6 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* User — desktop */}
             <div className="hidden lg:block" ref={dropdownRef}>
               {isAuthenticated ? (
                 <div className="relative">
@@ -214,7 +211,6 @@ const Navbar = () => {
                     />
                   </button>
 
-                  {/* Dropdown — fond blanc */}
                   {userMenuOpen && (
                     <div className="absolute right-0 top-full mt-2 w-52 bg-white rounded-2xl shadow-xl shadow-black/10 border border-gray-100 py-1.5 z-50">
                       <div className="px-4 py-2.5 border-b border-gray-50 mb-1">
@@ -266,7 +262,6 @@ const Navbar = () => {
               )}
             </div>
 
-            {/* Hamburger mobile */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="lg:hidden w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-200"
@@ -284,46 +279,15 @@ const Navbar = () => {
             </button>
           </div>
         </div>
-
-        {/* Recherche tablette */}
-        <div
-          className="hidden md:flex lg:hidden px-4 pb-3"
-          style={{ borderTop: "1px solid rgba(255,255,255,0.08)" }}
-        >
-          <div
-            className="flex items-center w-full rounded-xl px-3.5 py-2 gap-2.5 mt-2"
-            style={{
-              background: "rgba(255,255,255,0.10)",
-              border: "1px solid rgba(255,255,255,0.15)",
-            }}
-          >
-            <Search
-              size={14}
-              style={{ color: "rgba(255,255,255,0.45)" }}
-              className="shrink-0"
-            />
-            <input
-              type="search"
-              placeholder="Rechercher un produit..."
-              className="outline-none bg-transparent w-full text-sm font-contenu"
-              style={{ color: "white" }}
-              value={searchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              onKeyDown={handleSearch}
-            />
-          </div>
-        </div>
       </nav>
 
       {/* ════════════════════════════════════════
-          VAGUES ANIMÉES EN BAS
-          3 couches translateX (GPU) — boucle
-          seamless grâce aux paths dupliqués
+          VAGUES ANIMÉES — Hauteur réduite (40px)
       ════════════════════════════════════════ */}
       <div
         style={{
           background:
-            "linear-gradient(135deg, #0d2e1a 0%, #1a4a2e 55%, #2E6F40 100%)",
+            "linear-gradient(to bottom, #2E6F40 0%, transparent 100%)",
           lineHeight: 0,
           overflow: "hidden",
         }}
@@ -335,12 +299,11 @@ const Navbar = () => {
           }
         `}</style>
 
-        <div style={{ position: "relative", height: "72px" }}>
-          {/* Couche 3 — fond, lente */}
+        <div style={{ position: "relative", height: "40px" }}>
+          {/* Couche 3 */}
           <svg
             viewBox="0 0 2880 72"
             preserveAspectRatio="none"
-            aria-hidden="true"
             style={{
               position: "absolute",
               bottom: 0,
@@ -355,15 +318,14 @@ const Navbar = () => {
                  C1700,62 1960,8 2220,36 C2460,62 2660,12 2880,34
                  L2880,72 L0,72 Z"
               fill="white"
-              fillOpacity="0.15"
+              fillOpacity="0.1"
             />
           </svg>
 
-          {/* Couche 2 — milieu, vitesse inverse */}
+          {/* Couche 2 */}
           <svg
             viewBox="0 0 2880 72"
             preserveAspectRatio="none"
-            aria-hidden="true"
             style={{
               position: "absolute",
               bottom: 0,
@@ -378,15 +340,14 @@ const Navbar = () => {
                  C1380,20 1440,34 1680,42 C1900,14 2130,66 2380,40
                  C2600,16 2810,62 2880,32 L2880,72 L0,72 Z"
               fill="white"
-              fillOpacity="0.38"
+              fillOpacity="0.2"
             />
           </svg>
 
-          {/* Couche 1 — premier plan, rapide, opaque */}
+          {/* Couche 1 */}
           <svg
             viewBox="0 0 2880 72"
             preserveAspectRatio="none"
-            aria-hidden="true"
             style={{
               position: "absolute",
               bottom: 0,
@@ -413,7 +374,6 @@ const Navbar = () => {
       ════════════════════════════════════════ */}
       {menuOpen && (
         <div className="lg:hidden bg-white border-b border-gray-100 shadow-xl">
-          {/* Recherche mobile */}
           <div className="px-4 py-3" style={{ background: "#f9fafb" }}>
             <div className="flex items-center bg-white border border-gray-200 rounded-xl px-3.5 py-2.5 gap-2 focus-within:border-primaryGreen transition-all">
               <Search size={14} className="text-gray-400 shrink-0" />
@@ -428,7 +388,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Liens */}
           <div className="py-1.5">
             {navLinks.map((link) => (
               <Link
@@ -451,7 +410,6 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Footer mobile */}
           <div className="border-t border-gray-100 py-3 px-4">
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
