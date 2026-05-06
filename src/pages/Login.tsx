@@ -1,9 +1,8 @@
 /**
- * Login — Redesign premium
- * - Icônes Lucide React (remplacement emojis)
- * - Panneau gauche avec pattern décoratif SVG
- * - Formulaire avec focus states élégants
- * - Bouton de chargement amélioré
+ * Login — Style "Bubbles" adapté Tsinjo
+ * - Fond page : même vert que le navbar
+ * - Carte centrale arrondie : gauche vert + cercles déco / droite formulaire blanc
+ * - Logique front inchangée
  */
 
 import { useState } from "react";
@@ -11,7 +10,17 @@ import { useNavigate, Link } from "react-router-dom";
 import { loginSchema, type LoginInput } from "../schemas/auth.schema";
 import { authService } from "../services/auth.service";
 import { useAuthStore } from "../store/auth.store";
-import { User, Lock, Eye, EyeOff, AlertCircle, Loader2, Leaf, ArrowRight } from "lucide-react";
+import {
+  User,
+  Lock,
+  Eye,
+  EyeOff,
+  AlertCircle,
+  Loader2,
+  Leaf,
+  ArrowRight,
+} from "lucide-react";
+import logo from "../assets/logo/logo-dark-transparent.png";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -37,164 +46,234 @@ export default function Login() {
       const data = await authService.login(parsed.data);
       setTokens(data.access, data.refresh);
       await fetchUser();
-      navigate("/");
       const profile = await authService.getProfile();
       setUser(profile);
       navigate("/");
-    } catch (error) {
-      setApiError("Identifiants invalides. Vérifiez votre nom d'utilisateur et mot de passe.");
+    } catch {
+      setApiError(
+        "Identifiants invalides. Vérifiez votre nom d'utilisateur et mot de passe.",
+      );
     } finally {
       setLoading(false);
     }
   };
 
-  const inputClass = (hasError?: boolean) =>
-    `w-full pl-10 pr-4 py-3 rounded-xl border text-sm transition-all duration-200 bg-gray-50 outline-none focus:bg-white focus:ring-2 focus:ring-primaryGreen/20 ${
-      hasError ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-primaryGreen"
-    }`;
+  const inputCls = (err?: boolean) =>
+    `w-full pl-10 pr-4 py-3 rounded-xl border text-sm font-contenu bg-gray-50 outline-none transition-all duration-200
+     focus:bg-white focus:ring-2 focus:ring-primaryGreen/20
+     ${err ? "border-red-300 focus:border-red-400" : "border-gray-200 focus:border-primaryGreen"}`;
 
   return (
-    <div className="min-h-screen flex font-contenu">
-      
-      {/* Panneau gauche décoratif */}
-      <div
-        className="hidden lg:flex lg:w-5/12 xl:w-1/2 flex-col justify-between p-12 relative overflow-hidden"
-        style={{ background: "linear-gradient(145deg, #1a4a2e 0%, #2E6F40 60%, #4caf7d 100%)" }}
-      >
-        {/* Cercles décoratifs */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 rounded-full bg-white/5" />
-        <div className="absolute bottom-10 -right-20 w-80 h-80 rounded-full bg-white/5" />
-        <div className="absolute top-1/2 left-1/3 w-48 h-48 rounded-full bg-white/3" />
+    /* Fond navbar — plein écran, centré, padding-top = hauteur navbar */
+    <div
+      className="min-h-screen flex items-center justify-center p-4 pt-24 pb-10 font-contenu"
+      style={{
+        background: "#ffff",
+      }}
+    >
+      {/* ── Carte principale ── */}
+      <div className="w-full max-w-4xl rounded-3xl overflow-hidden shadow-2xl flex min-h-[520px]">
+        {/* ════ GAUCHE — vert + bulles ════ */}
+        <div
+          className="hidden lg:flex lg:w-[42%] flex-col justify-between p-10 relative overflow-hidden"
+          style={{
+            background:
+              "linear-gradient(160deg, #0d2e1a 0%, #1a4a2e 50%, #2E6F40 100%)",
+          }}
+        >
+          {/* Bulles décoratives — inspirées du mockup */}
+          <div
+            className="absolute -bottom-16 -left-16 w-64 h-64 rounded-full"
+            style={{ background: "rgba(255,255,255,0.07)" }}
+          />
+          <div
+            className="absolute -bottom-6 left-24 w-44 h-44 rounded-full"
+            style={{ background: "rgba(255,255,255,0.10)" }}
+          />
+          <div
+            className="absolute top-10 -right-12 w-48 h-48 rounded-full"
+            style={{ background: "rgba(255,255,255,0.05)" }}
+          />
+          <div
+            className="absolute top-32 right-8 w-20 h-20 rounded-full"
+            style={{ background: "rgba(255,255,255,0.08)" }}
+          />
 
-        {/* Logo */}
-        <div className="relative z-10 flex items-center gap-3">
-          <div className="w-10 h-10 rounded-2xl bg-white/15 backdrop-blur-sm flex items-center justify-center border border-white/20">
-            <Leaf size={20} className="text-white" />
+          {/* Logo */}
+          <div className="relative z-10 flex items-center gap-2.5">
+            <div
+              className="w-9 h-9 rounded-xl flex items-center justify-center"
+              style={{
+                background: "rgba(255,255,255,0.13)",
+                border: "1px solid rgba(255,255,255,0.20)",
+              }}
+            >
+              <Leaf size={18} className="text-white" />
+            </div>
+            <img
+              src={logo}
+              alt="Tsinjo"
+              className="h-8 w-auto"
+              style={{ filter: "brightness(0) invert(1)" }}
+            />
           </div>
-          <span className="text-white text-lg font-bold tracking-tight font-titre">AntiGaspillage</span>
-        </div>
 
-        {/* Citation centrale */}
-        <div className="relative z-10 space-y-8">
-          <div>
-            <p className="text-white/80 text-sm font-medium mb-3 uppercase tracking-widest">Notre mission</p>
-            <h2 className="text-white text-4xl font-light font-titre leading-tight">
-              Ensemble, réduisons<br />
-              <span className="font-bold">le gaspillage</span><br />
-              alimentaire.
+          {/* Texte central */}
+          <div className="relative z-10">
+            <p
+              className="text-xs uppercase tracking-widest font-semibold mb-3 font-contenu"
+              style={{ color: "rgba(255,255,255,0.45)" }}
+            >
+              Bienvenue
+            </p>
+            <h2 className="text-white text-3xl font-bold font-titre leading-tight mb-3">
+              Tsinjo
+              <br />
+              <span className="font-light">Anti-Gaspillage</span>
             </h2>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              { value: "1 000+", label: "Produits sauvés" },
-              { value: "500+", label: "Membres actifs" },
-              { value: "0 Ar", label: "Pour s'inscrire" },
-              { value: "90j", label: "Suivi communauté" },
-            ].map((stat) => (
-              <div key={stat.label} className="bg-white/10 backdrop-blur-sm rounded-2xl p-4 border border-white/10">
-                <p className="text-white text-2xl font-bold">{stat.value}</p>
-                <p className="text-white/60 text-xs mt-0.5 font-contenu">{stat.label}</p>
-              </div>
-            ))}
+            <p
+              className="text-sm leading-relaxed font-contenu"
+              style={{ color: "rgba(255,255,255,0.52)" }}
+            >
+              Plateforme communautaire pour réduire le gaspillage alimentaire à
+              Madagascar.
+            </p>
           </div>
         </div>
-      </div>
 
-      {/* Panneau droit — formulaire */}
-      <div className="flex-1 flex items-center justify-center p-6 bg-gray-50 min-h-screen">
-        <div className="w-full max-w-md">
-
-          {/* Logo mobile */}
-          <div className="lg:hidden flex items-center gap-2 mb-8">
-            <div className="w-8 h-8 rounded-xl bg-primaryGreen flex items-center justify-center">
-              <Leaf size={16} className="text-white" />
-            </div>
-            <span className="text-lg font-bold text-gray-800 font-titre">AntiGaspillage</span>
-          </div>
-
-          <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
-            <div className="mb-8">
-              <h1 className="text-2xl font-bold text-gray-900 mb-2 font-titre">Bon retour 👋</h1>
-              <p className="text-gray-500 text-sm">Connectez-vous à votre compte pour continuer.</p>
+        {/* ════ DROITE — formulaire blanc ════ */}
+        <div className="flex-1 bg-white flex items-center justify-center p-8 md:p-12">
+          <div className="w-full max-w-sm">
+            {/* Logo mobile */}
+            <div className="lg:hidden flex items-center gap-2 mb-7">
+              <div className="w-8 h-8 rounded-xl bg-primaryGreen flex items-center justify-center">
+                <Leaf size={15} className="text-white" />
+              </div>
+              <img src={logo} alt="Tsinjo" className="h-7 w-auto" />
             </div>
 
-            {/* Erreur API */}
+            <div className="mb-7">
+              <h1 className="text-2xl font-bold text-gray-900 font-titre mb-1">
+                Se connecter
+              </h1>
+              <p className="text-sm text-gray-400 font-contenu">
+                Accédez à votre espace Tsinjo.
+              </p>
+            </div>
+
             {apiError && (
-              <div className="mb-6 p-4 rounded-xl bg-red-50 border border-red-100 flex items-start gap-3">
-                <AlertCircle size={16} className="text-red-500 mt-0.5 shrink-0" />
-                <p className="text-red-600 text-sm">{apiError}</p>
+              <div className="mb-5 p-3.5 rounded-xl bg-red-50 border border-red-100 flex items-start gap-2.5">
+                <AlertCircle
+                  size={15}
+                  className="text-red-500 mt-0.5 shrink-0"
+                />
+                <p className="text-red-600 text-sm font-contenu">{apiError}</p>
               </div>
             )}
 
-            <form onSubmit={handleSubmit} className="space-y-5">
-              
+            <form onSubmit={handleSubmit} className="space-y-4">
               {/* Username */}
               <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1.5">
+                <label className="block text-xs font-semibold text-gray-500 uppercase tracking-wide mb-1.5 font-contenu">
                   Nom d'utilisateur
                 </label>
                 <div className="relative">
-                  <User size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <User
+                    size={15}
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                  />
                   <input
                     type="text"
                     placeholder="votre_username"
                     value={form.username}
-                    onChange={(e) => setForm({ ...form, username: e.target.value })}
-                    className={inputClass(!!errors.username)}
+                    onChange={(e) =>
+                      setForm({ ...form, username: e.target.value })
+                    }
+                    className={inputCls(!!errors.username)}
                   />
                 </div>
-                {errors.username && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><AlertCircle size={12} />{errors.username[0]}</p>}
+                {errors.username && (
+                  <p className="text-red-500 text-xs mt-1 flex items-center gap-1 font-contenu">
+                    <AlertCircle size={11} />
+                    {errors.username[0]}
+                  </p>
+                )}
               </div>
 
               {/* Password */}
               <div>
-                <div className="flex justify-between items-center mb-1.5">
-                  <label className="block text-sm font-medium text-gray-700">Mot de passe</label>
-                  <button type="button" onClick={() => navigate("/forgot-password")} className="text-xs text-primaryGreen hover:text-primaryGreen/80 font-medium transition-colors">
-                    Mot de passe oublié ?
+                <div className="flex items-center justify-between mb-1.5">
+                  <label className="text-xs font-semibold text-gray-500 uppercase tracking-wide font-contenu">
+                    Mot de passe
+                  </label>
+                  <button
+                    type="button"
+                    onClick={() => navigate("/forgot-password")}
+                    className="text-xs text-primaryGreen hover:underline font-contenu"
+                  >
+                    Oublié ?
                   </button>
                 </div>
                 <div className="relative">
-                  <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                  <Lock
+                    size={15}
+                    className="absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400"
+                  />
                   <input
                     type={showPassword ? "text" : "password"}
                     placeholder="••••••••"
                     value={form.password}
-                    onChange={(e) => setForm({ ...form, password: e.target.value })}
-                    className={`${inputClass(!!errors.password)} pr-12`}
+                    onChange={(e) =>
+                      setForm({ ...form, password: e.target.value })
+                    }
+                    className={`${inputCls(!!errors.password)} pr-12`}
                   />
                   <button
                     type="button"
                     onClick={() => setShowPassword(!showPassword)}
-                    className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                    className="absolute right-3.5 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
                   >
-                    {showPassword ? <EyeOff size={16} /> : <Eye size={16} />}
+                    {showPassword ? <EyeOff size={15} /> : <Eye size={15} />}
                   </button>
                 </div>
-                {errors.password && <p className="text-red-500 text-xs mt-1.5 flex items-center gap-1"><AlertCircle size={12} />{errors.password[0]}</p>}
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1 flex items-center gap-1 font-contenu">
+                    <AlertCircle size={11} />
+                    {errors.password[0]}
+                  </p>
+                )}
               </div>
 
               {/* Bouton */}
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full py-3.5 rounded-xl text-white font-semibold text-sm transition-all duration-200 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2 shadow-md shadow-primaryGreen/20 hover:shadow-lg hover:shadow-primaryGreen/25 hover:-translate-y-0.5"
-                style={{ background: "linear-gradient(135deg, #1a4a2e, #2E6F40)" }}
+                className="w-full py-3.5 rounded-xl text-white font-semibold text-sm font-titre transition-all duration-200 disabled:opacity-60 flex items-center justify-center gap-2 hover:-translate-y-0.5 active:translate-y-0 mt-2"
+                style={{
+                  background:
+                    "linear-gradient(135deg, #0d2e1a 0%, #2E6F40 100%)",
+                  boxShadow: "0 4px 20px rgba(46,111,64,0.35)",
+                }}
               >
                 {loading ? (
-                  <><Loader2 size={16} className="animate-spin" /> Connexion...</>
+                  <>
+                    <Loader2 size={15} className="animate-spin" /> Connexion...
+                  </>
                 ) : (
-                  <> Se connecter <ArrowRight size={16} /></>
+                  <>
+                    Se connecter <ArrowRight size={15} />
+                  </>
                 )}
               </button>
             </form>
 
-            <p className="mt-6 text-center text-sm text-gray-500">
+            <p className="mt-6 text-center text-sm text-gray-400 font-contenu">
               Pas encore de compte ?{" "}
-              <Link to="/register" className="text-primaryGreen font-semibold hover:text-primaryGreen/80 transition-colors">
-                S'inscrire gratuitement
+              <Link
+                to="/register"
+                className="text-primaryGreen font-semibold hover:underline font-titre"
+              >
+                S'inscrire →
               </Link>
             </p>
           </div>
