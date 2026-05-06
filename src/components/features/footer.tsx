@@ -1,11 +1,9 @@
 /**
- * Footer — Redesign "Mountain Waves"
- * - Vagues SVG superposées (3 couches) pour l'effet de profondeur
- * - Fond dégradé vert profond → vert (identité couleur du projet)
- * - Logo inversé (blanc) sur fond sombre
- * - Liens navigation avec points décoratifs
- * - Réseaux sociaux avec hover glassmorphism
- * - Copyright avec icône Heart
+ * Footer — Mountain Waves v2
+ * - Vagues SVG EN HAUT animées (3 couches comme le Navbar)
+ * - Hauteur réduite / plus aérée
+ * - Animations waveScroll identiques au Navbar
+ * - Liens et contenu inchangés
  */
 
 import logo from "../../assets/logo/logo-dark-transparent.png";
@@ -41,94 +39,117 @@ const Footer = () => {
 
   return (
     <footer className="relative mt-24 w-full overflow-hidden">
-      {/* ───────────────────────────────────────────────────
-          VAGUES SVG — transition blanc → fond vert sombre
-          3 couches superposées pour l'effet "montagne"
-      ─────────────────────────────────────────────────── */}
+      {/* ════════════════════════════════════════
+          VAGUES ANIMÉES EN HAUT — identiques au Navbar
+          Transition : blanc → vert sombre
+      ════════════════════════════════════════ */}
       <div
-        className="w-full overflow-hidden leading-none"
-        style={{ background: "white" }}
-      >
-        <svg
-          viewBox="0 0 1440 130"
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-full block"
-          preserveAspectRatio="none"
-          style={{ display: "block", marginBottom: "-2px" }}
-        >
-          {/* Couche 1 — la plus loin, teinte la plus claire */}
-          <path
-            d="M0,45 C260,115 520,5 780,65 C1020,118 1220,18 1440,58 L1440,130 L0,130 Z"
-            fill="#0d2e1a"
-            fillOpacity="0.40"
-          />
-          {/* Couche 2 — milieu */}
-          <path
-            d="M0,72 C200,18 430,108 680,72 C900,42 1110,98 1310,62 C1380,50 1420,68 1440,60 L1440,130 L0,130 Z"
-            fill="#1a4a2e"
-            fillOpacity="0.70"
-          />
-          {/* Couche 3 — premier plan, opaque */}
-          <path
-            d="M0,98 C160,58 350,118 560,88 C750,62 970,112 1170,80 C1310,60 1400,94 1440,85 L1440,130 L0,130 Z"
-            fill="#1a4a2e"
-            fillOpacity="1"
-          />
-        </svg>
-      </div>
-
-      {/* ───────────────────────────────────────────────────
-          FOND SOMBRE + CONTENU
-      ─────────────────────────────────────────────────── */}
-      <div
-        className="relative w-full"
         style={{
-          background:
-            "linear-gradient(155deg, #0d2e1a 0%, #1a4a2e 45%, #2E6F40 100%)",
+          backgroundColor: "#0d2e1a",
+          lineHeight: 0,
+          overflow: "hidden",
         }}
       >
-        {/* Cercles décoratifs flous en arrière-plan */}
-        <div
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            width: "280px",
-            height: "280px",
-            top: "8%",
-            left: "18%",
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.04) 0%, transparent 70%)",
-            filter: "blur(40px)",
-          }}
-        />
-        <div
-          className="absolute rounded-full pointer-events-none"
-          style={{
-            width: "200px",
-            height: "200px",
-            bottom: "20%",
-            right: "18%",
-            background:
-              "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)",
-            filter: "blur(32px)",
-          }}
-        />
+        <style>{`
+          @keyframes waveScrollFooter {
+            from { transform: translateX(0); }
+            to   { transform: translateX(-50%); }
+          }
+        `}</style>
 
-        {/* ── Grille contenu ── */}
-        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-10 pb-10">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-12 md:gap-16 mb-12">
-            {/* Colonne 1 : logo + tagline + réseaux sociaux */}
+        <div style={{ position: "relative", height: "56px" }}>
+          {/* Couche 3 — lente, arrière-plan */}
+          <svg
+            viewBox="0 0 2880 72"
+            preserveAspectRatio="none"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "200%",
+              height: "100%",
+              animation: "waveScrollFooter 14s linear infinite",
+            }}
+          >
+            <path
+              d="M0,52 C260,18 520,68 780,44 C1020,18 1220,62 1440,40
+                 C1700,18 1960,68 2220,44 C2460,18 2660,62 2880,40
+                 L2880,0 L0,0 Z"
+              fill="white"
+              fillOpacity="0.08"
+            />
+          </svg>
+
+          {/* Couche 2 — vitesse moyenne, sens inverse */}
+          <svg
+            viewBox="0 0 2880 72"
+            preserveAspectRatio="none"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "200%",
+              height: "100%",
+              animation: "waveScrollFooter 9s linear infinite reverse",
+            }}
+          >
+            <path
+              d="M0,36 C200,62 430,14 680,40 C900,64 1110,20 1310,44
+                 C1380,52 1440,34 1680,36 C1900,62 2130,14 2380,40
+                 C2600,64 2810,20 2880,44 L2880,0 L0,0 Z"
+              fill="white"
+              fillOpacity="0.12"
+            />
+          </svg>
+
+          {/* Couche 1 — rapide, premier plan, plus opaque */}
+          <svg
+            viewBox="0 0 2880 72"
+            preserveAspectRatio="none"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "200%",
+              height: "100%",
+              animation: "waveScrollFooter 6s linear infinite",
+            }}
+          >
+            <path
+              d="M0,22 C160,56 350,8 560,32 C750,56 970,10 1170,36
+                 C1310,54 1440,22 1600,22 C1760,56 1950,8 2160,32
+                 C2350,56 2570,10 2770,36 C2910,54 2880,22 2880,22
+                 L2880,0 L0,0 Z"
+              fill="white"
+              fillOpacity="0.70"
+            />
+          </svg>
+        </div>
+      </div>
+
+      {/* ════════════════════════════════════════
+          FOND + CONTENU
+      ════════════════════════════════════════ */}
+      <div
+        style={{
+          background:
+            "linear-gradient(155deg, #0d2e1a 0%, #1a4a2e 50%, #2E6F40 100%)",
+        }}
+      >
+        <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-10 pt-10 pb-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-14 mb-10">
+            {/* Colonne 1 — Logo + réseaux */}
             <div className="flex flex-col gap-5">
               <div className="flex items-center gap-2.5">
                 <div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center border"
+                  className="w-9 h-9 rounded-xl flex items-center justify-center"
                   style={{
                     background: "rgba(255,255,255,0.12)",
-                    borderColor: "rgba(255,255,255,0.18)",
+                    border: "1px solid rgba(255,255,255,0.18)",
                   }}
                 >
                   <Leaf size={18} className="text-white" />
                 </div>
-                {/* Logo blanc par filtre CSS */}
                 <img
                   src={logo}
                   alt="Logo Tsinjo"
@@ -136,16 +157,13 @@ const Footer = () => {
                   style={{ filter: "brightness(0) invert(1)" }}
                 />
               </div>
-
               <p
                 className="text-sm font-contenu leading-relaxed max-w-xs"
-                style={{ color: "rgba(255,255,255,0.58)" }}
+                style={{ color: "rgba(255,255,255,0.50)" }}
               >
                 Plateforme anti-gaspillage alimentaire à Madagascar. Ensemble,
                 donnons une seconde vie aux repas.
               </p>
-
-              {/* Réseaux sociaux */}
               <div className="flex items-center gap-2">
                 {socialLinks.map(({ icon: Icon, href, label }) => (
                   <a
@@ -154,22 +172,11 @@ const Footer = () => {
                     aria-label={label}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200"
+                    className="w-9 h-9 rounded-xl flex items-center justify-center transition-all duration-200 hover:scale-105 hover:bg-white/15"
                     style={{
-                      background: "rgba(255,255,255,0.09)",
+                      background: "rgba(255,255,255,0.08)",
                       border: "1px solid rgba(255,255,255,0.14)",
-                      color: "rgba(255,255,255,0.62)",
-                    }}
-                    onMouseEnter={(e) => {
-                      (e.currentTarget as HTMLElement).style.background =
-                        "rgba(255,255,255,0.18)";
-                      (e.currentTarget as HTMLElement).style.color = "white";
-                    }}
-                    onMouseLeave={(e) => {
-                      (e.currentTarget as HTMLElement).style.background =
-                        "rgba(255,255,255,0.09)";
-                      (e.currentTarget as HTMLElement).style.color =
-                        "rgba(255,255,255,0.62)";
+                      color: "rgba(255,255,255,0.60)",
                     }}
                   >
                     <Icon size={15} />
@@ -178,27 +185,27 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Colonne 2 : navigation */}
+            {/* Colonne 2 — Navigation */}
             <div>
               <p
-                className="text-xs font-semibold uppercase tracking-widest mb-5 font-contenu"
-                style={{ color: "rgba(255,255,255,0.32)" }}
+                className="text-xs font-semibold uppercase tracking-widest mb-4 font-contenu"
+                style={{ color: "rgba(255,255,255,0.28)" }}
               >
                 Navigation
               </p>
-              <div className="flex flex-col gap-3">
+              <div className="flex flex-col gap-2.5">
                 {navLinks.map((link) => (
                   <Link
                     key={link.to}
                     to={link.to}
                     className="text-sm font-titre transition-colors duration-200 flex items-center gap-2.5 group"
-                    style={{ color: "rgba(255,255,255,0.62)" }}
+                    style={{ color: "rgba(255,255,255,0.58)" }}
                   >
                     <span
-                      className="w-1.5 h-1.5 rounded-full shrink-0 transition-colors duration-200"
+                      className="w-1.5 h-1.5 rounded-full shrink-0 transition-all duration-200 group-hover:scale-150"
                       style={{ background: "rgba(255,255,255,0.22)" }}
                     />
-                    <span className="group-hover:text-white transition-colors">
+                    <span className="group-hover:text-white transition-colors duration-200">
                       {link.label}
                     </span>
                   </Link>
@@ -206,29 +213,22 @@ const Footer = () => {
               </div>
             </div>
 
-            {/* Colonne 3 : contact + carte mission */}
+            {/* Colonne 3 — Contact */}
             <div>
               <p
-                className="text-xs font-semibold uppercase tracking-widest mb-5 font-contenu"
-                style={{ color: "rgba(255,255,255,0.32)" }}
+                className="text-xs font-semibold uppercase tracking-widest mb-4 font-contenu"
+                style={{ color: "rgba(255,255,255,0.28)" }}
               >
                 Contact
               </p>
-
               <a
                 href="mailto:tsinjo@contact.dev"
-                className="flex items-center gap-2.5 text-sm transition-colors duration-200 mb-6"
-                style={{ color: "rgba(255,255,255,0.62)" }}
+                className="flex items-center gap-2.5 text-sm mb-5 transition-colors duration-200 hover:text-white"
+                style={{ color: "rgba(255,255,255,0.58)" }}
               >
-                <Mail
-                  size={14}
-                  className="shrink-0"
-                  style={{ color: "rgba(255,255,255,0.32)" }}
-                />
+                <Mail size={14} style={{ color: "rgba(255,255,255,0.30)" }} />
                 tsinjo@contact.dev
               </a>
-
-              {/* Carte mission */}
               <div
                 className="rounded-2xl p-4"
                 style={{
@@ -244,7 +244,7 @@ const Footer = () => {
                 </div>
                 <p
                   className="text-xs font-contenu leading-relaxed"
-                  style={{ color: "rgba(255,255,255,0.48)" }}
+                  style={{ color: "rgba(255,255,255,0.42)" }}
                 >
                   Réduire le gaspillage alimentaire à Madagascar, un repas à la
                   fois.
@@ -255,18 +255,18 @@ const Footer = () => {
 
           {/* Copyright */}
           <div
-            className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-3"
-            style={{ borderTop: "1px solid rgba(255,255,255,0.10)" }}
+            className="pt-5 flex flex-col sm:flex-row items-center justify-between gap-3"
+            style={{ borderTop: "1px solid rgba(255,255,255,0.09)" }}
           >
             <p
               className="text-xs font-contenu"
-              style={{ color: "rgba(255,255,255,0.28)" }}
+              style={{ color: "rgba(255,255,255,0.26)" }}
             >
               © 2026 Tsinjo — Tous droits réservés.
             </p>
             <p
               className="text-xs font-contenu flex items-center gap-1.5"
-              style={{ color: "rgba(255,255,255,0.28)" }}
+              style={{ color: "rgba(255,255,255,0.26)" }}
             >
               Fait avec{" "}
               <Heart size={10} style={{ color: "#f87171", fill: "#f87171" }} />{" "}
