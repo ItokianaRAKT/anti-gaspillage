@@ -340,7 +340,7 @@ const Navbar = () => {
                  C1380,20 1440,34 1680,42 C1900,14 2130,66 2380,40
                  C2600,16 2810,62 2880,32 L2880,72 L0,72 Z"
               fill="white"
-              fillOpacity="0.2"
+              fillOpacity="0"
             />
           </svg>
 
@@ -363,7 +363,7 @@ const Navbar = () => {
                  C2350,28 2570,64 2770,40 C2910,25 2880,46 2880,46
                  L2880,72 L0,72 Z"
               fill="white"
-              fillOpacity="1"
+              fillOpacity="0"
             />
           </svg>
         </div>
