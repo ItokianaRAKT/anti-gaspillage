@@ -121,7 +121,7 @@ const Footer = () => {
                  C2350,56 2570,10 2770,36 C2910,54 2880,22 2880,22
                  L2880,0 L0,0 Z"
               fill="white"
-              fillOpacity="0.70"
+              fillOpacity="1"
             />
           </svg>
         </div>
